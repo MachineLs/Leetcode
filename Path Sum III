@@ -1,0 +1,40 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+ Solution 1 : DFS from top to bottom
+class Solution {
+    public int pathSum(TreeNode root, int targetSum) {
+        //step1 rootSum 求一个node从上到下之和满足targetSum的个数
+        //step2, pathSum root的左右子树
+        //返回rootSum, pathSum左和右计算出的值的和;
+        if (root == null) return 0;
+        int res = rootSum(root, targetSum);
+        res += pathSum(root.left, targetSum);
+        res += pathSum(root.right, targetSum);
+        return res;
+    }
+//long targetSum, 因为node值超过int, 所以要改一下
+    private int rootSum(TreeNode root, long targetSum) {
+        if (root == null) return 0;
+        int val = root.val;
+        int res = 0;
+        if (val == targetSum) {
+            res++;
+        }
+        res += rootSum(root.left, targetSum - val);
+        res += rootSum(root.right, targetSum - val);
+        return res;
+    }
+}
