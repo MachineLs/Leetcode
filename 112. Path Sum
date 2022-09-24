@@ -1,0 +1,47 @@
+reference: https://afteracademy.com/blog/path-sum-in-binary-tree
+https://leetcode.cn/problems/path-sum/
+
+BFS solution
+
+class Solution {
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        //两个queue,一个记录node,一个记录自上而下累加的值,当遇到根节点的时候,判断queue poll出的值是否和targetSum相等
+        if (root == null) return false;
+        Queue<Integer> values = new LinkedList<>();
+        Queue<TreeNode> nodes = new LinkedList<>();
+        values.offer(root.val);
+        nodes.offer(root);
+        while (!nodes.isEmpty()) {
+            int value = values.poll();
+            TreeNode cur = nodes.poll();
+            if (cur.left == null && cur.right == null && value == targetSum) {
+                return true;
+            }
+            if (cur.left != null) {
+                nodes.offer(cur.left);
+                //我错在值传递
+                // values.offer(cur.val + cur.left.val);
+                values.offer(value + cur.left.val);
+            }
+            if (cur.right != null) {
+                nodes.offer(cur.right);
+                values.offer(value + cur.right.val);
+            }
+        }
+        return false;
+    }
+}
+
+DFS solution
+
+class Solution {
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        //https://afteracademy.com/blog/path-sum-in-binary-tree
+        if (root == null) return false;
+        if (root.left == null && root.right == null && root.val == targetSum) {
+            return true;
+        }
+        return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
+    }
+    // o(n) and o(h)
+}
