@@ -20,3 +20,28 @@ class Solution {
         return res;
     } // O(3n) and O(2n) -> O(n) and O(n)
 }
+
+Solution2: O(n) and O(1)Follow up: Can you solve the problem in O(1) extra space complexity? (The output array does not count as extra space for space complexity analysis.)
+
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        //Step1: compute the prefixProduct and suffixProduct for each element in the array.
+        //Step2: multiply the corresponding prefix and suffix and return the ans.
+        //follow up: we don't need to store prefix and suffix; just compute prefix in accending order in res array, and compute the suffix in decending order
+        // and store the value in res array. 
+        int n = nums.length;
+        int[] res = new int[n];
+        res[0] = 1;
+        for (int i = 1; i < n; i++) {
+            res[i] = nums[i - 1] * res[i - 1];
+        }
+        // System.out.println(Arrays.toString(res));
+        //这里有个tricky的地方, 在不给最后一个值初始为1的情况下,怎么算后缀和
+        int s = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            res[i] = res[i] * s;
+            s = nums[i] * s;
+        }
+        return res;
+    } // O(2n) and O(1) -> O(n) and O(1)
+}
