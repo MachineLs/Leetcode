@@ -1,0 +1,19 @@
+53. Maximum Subarray
+https://leetcode.cn/problems/maximum-subarray/
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int n = nums.length;
+        int[] M = new int[n];
+        M[0] = nums[0];
+        int max = nums[0];
+        for (int i = 0; i < n; i++) {
+            if (i - 1 >= 0) {
+                M[i] = Math.max(M[i-1] + nums[i], nums[i]); //我错在M的物理意义没搞清楚, M存的是遍历到i时候sub-array的最大和, 此时还需要一个max来记录global max
+                max = Math.max(max, M[i]);
+            }
+            
+        }
+        return max;
+    }
+}
