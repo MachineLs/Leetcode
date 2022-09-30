@@ -1,0 +1,54 @@
+Solution 1: i j 固定i, j一直往后遍历算出最大的subarray的乘积
+class Solution {
+    public int maxProduct(int[] nums) {
+        int n = nums.length;
+        int result = nums[0];
+        for (int i = 0; i < n; i++) {
+            int acc = 1;
+            for (int j = i; j < n; j++) {
+                acc *= nums[j];
+                result = Math.max(result, acc);
+                System.out.println(Arrays.toString(new int[]{i, j, nums[j],acc,  result}));
+            }
+        }
+        return result;
+    }
+}
+example: [2,3,-2,4]
+output:
+[0, 0, 2, 2, 2]
+[0, 1, 3, 6, 6]
+[0, 2, -2, -12, 6]
+[0, 3, 4, -48, 6]
+[1, 1, 3, 3, 6]
+[1, 2, -2, -6, 6]
+[1, 3, 4, -24, 6]
+[2, 2, -2, -2, 6]
+[2, 3, 4, -8, 6]
+[3, 3, 4, 4, 6]
+
+Solution2: DP   O(n) and O(1)
+class Solution {
+    public int maxProduct(int[] nums) {
+        int n = nums.length;
+        int result = nums[0];
+        int max_product_sofar = nums[0];
+        int min_product_sofar = nums[0];
+        for (int i = 1; i < n; i++) {
+            int cur = nums[i];
+            System.out.println(Arrays.toString(new int[]{cur,max_product_sofar,min_product_sofar,result}));
+            int tmpMax = Math.max(cur, Math.max(max_product_sofar * cur, min_product_sofar * cur));// 看看cur大还是,之前的min和max乘cur哪个大,如果cur更大另起炉灶
+            min_product_sofar = Math.min(cur, Math.min(max_product_sofar * cur, min_product_sofar * cur)); //看看cur小还是,之前的min和max乘cur哪个小,如果cur更小另起炉灶
+            max_product_sofar = tmpMax;//注意min,max都是之前一个数的乘积和,如果不暂存下来,更新了max会影响到上面min值的发挥
+            result = Math.max(max_product_sofar, result);//update globalMax也就是result
+            System.out.println(Arrays.toString(new int[]{cur,tmpMax,max_product_sofar,min_product_sofar,result}));
+        }
+        return result;
+    }
+}
+
+[-4,-3,-2]
+[-3, -4, -4, -4]
+[-3, 12, 12, -3, 12]
+[-2, 12, -3, 12]
+[-2, 6, 6, -24, 12]
