@@ -14,6 +14,7 @@ class Solution {
             int mid = left + (right - left) / 2;
             //找到转折点inflection point, 例如[3,4,5,1,2] 5和1都是转折点 所以有两种情况
             //如果mid在5上, 5是大于后面的点1
+            //注意nums[mid] > nums[mid + 1] 必须放在nums[mid - 1] > nums[mid]前面,要不然 [3,1] mid-1会变成-1
             if (nums[mid] > nums[mid + 1]) {
                 return nums[mid + 1];
             }
