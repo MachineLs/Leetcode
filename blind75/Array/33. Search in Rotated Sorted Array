@@ -1,0 +1,53 @@
+Solution1 : high level 找到inflection point, 分别对左右两边做2分查找即可 O(logn) and O(1)
+class Solution {
+    public int search(int[] nums, int target) {
+        //high level 找到inflection point, 分别对左右两边做2分查找即可
+        int left = 0, right = nums.length - 1;
+        if (nums.length == 1) {
+            if (target == nums[0]) {
+                return 0;
+            }
+            return -1;
+        }
+        
+        int inflectionPoint = helper(nums);
+        int leftSide = binarySearch(nums, left, inflectionPoint, target);
+        int rightSide = binarySearch(nums, inflectionPoint, right, target);
+        if (rightSide != -1) return rightSide;
+        if (leftSide != -1) return leftSide;
+        return -1;
+    }
+
+    public int helper(int[] nums) {
+        int left = 0, right = nums.length - 1;
+        if (nums[left] < nums[right]) return 0;
+        while (right >= left) {
+            int mid = left + (right - left) / 2;
+            //nums[mid] > nums[mid + 1] 必须放在 nums[mid] < nums[mid - 1] 前面否则 mid-1会为-1 (example为[3,1]),
+            //这是因为mid取偏左,所以先判断mid+1情况,如果mid-1,mid本来很小,就会向左边越界为-1;
+            if (nums[mid] > nums[mid + 1]) return mid + 1; 
+            if (nums[mid] < nums[mid - 1]) return mid;
+            if (nums[mid] > nums[left]) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return -1;
+    }
+
+    public int binarySearch(int[] nums, int left, int right, int target) {
+        while (right >= left) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+            if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return -1;
+    }
+}
