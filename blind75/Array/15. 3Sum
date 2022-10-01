@@ -1,4 +1,4 @@
-Solution 1: 使用twoSumII的方法并且进行了剪枝 Time: O(n^2) and Space: O(n) or O(logn) depending on sorting algo
+Solution 1: 使用twoSumII的方法并且进行了剪枝(prune) Time: O(n^2) and Space: O(n) or O(logn) depending on sorting algo
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         Arrays.sort(nums);
