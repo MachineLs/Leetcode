@@ -1,0 +1,47 @@
+Solution 1: 使用twoSumII的方法并且进行了剪枝 Time: O(n^2) and Space: O(n) or O(logn) depending on sorting algo
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
+        for (int i = 0; i < nums.length && nums[i] <= 0; ++i) { //sort后nums[i] > 0, 不可能加起来为0了,所以剪枝
+            if (i == 0 || nums[i-1] != nums[i]) { //sort后,通过判断相邻的数检查重复
+                twoSumII(nums, i, res);
+            }
+        }
+        return res;
+    }
+
+    public void twoSumII(int[] nums, int i, List<List<Integer>> res) {
+        int left = i + 1, right = nums.length - 1;
+        while (left < right) {
+            int sum = nums[i] + nums[left] + nums[right];
+            if (sum == 0) {
+                res.add(Arrays.asList(nums[i], nums[left++], nums[right--]));
+                while (left < right && nums[left] == nums[left - 1]) {
+                    left++;
+                }
+            } else if (sum < 0) left++;
+            else {
+                right--;
+            }
+        }
+    }
+}
+
+For the main function:
+
+Sort the input array nums.
+Iterate through the array:
+If the current value is greater than zero, break from the loop. Remaining values cannot sum to zero.
+If the current value is the same as the one before, skip it.
+Otherwise, call twoSumII for the current position i.
+For twoSumII function:
+
+Set the low pointer lo to i + 1, and high pointer hi to the last index.
+While low pointer is smaller than high:
+If sum of nums[i] + nums[lo] + nums[hi] is less than zero, increment lo.
+If sum is greater than zero, decrement hi.
+Otherwise, we found a triplet:
+Add it to the result res.
+Decrement hi and increment lo.
+Increment lo while the next value is the same as before to avoid duplicates in the result.
