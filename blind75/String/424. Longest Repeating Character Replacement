@@ -1,0 +1,24 @@
+Solution1: O(n) and O(A) A 是输入字符串 S 出现的字符 ASCII 值的范围
+class Solution {
+    public int characterReplacement(String s, int k) {
+        //step1: 使用快慢指针,和不重复subarray一样, right在前面走, 维护频次表
+        //step2: 当right - left 大于频次最大相同字符maxCount + k时候, 也就是变了k次也没有right - left多的时候说明k不够用了不满足条件
+        //step3: 此时删掉left对应的频次表, left++, 返回maxLength
+        int n = s.length();
+        if (n < 2) {
+            return n;
+        }
+        int[] freq = new int[26];
+        int left = 0, right = 0, maxCount = 0, maxLength = 0;
+        while (right < n) {
+            maxCount = Math.max(maxCount, ++freq[s.charAt(right) - 'A']);
+            right++;
+            while (right - left > maxCount + k) {
+                freq[s.charAt(left) - 'A']--;
+                left++;
+            }
+            maxLength = Math.max(maxLength, right - left);
+        }
+        return maxLength;
+    }
+}
