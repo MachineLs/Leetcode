@@ -1,0 +1,32 @@
+class Solution {
+    public String minWindow(String s, String t) {
+        //step1: 先把t里的字母放进map
+        int[] map = new int[128];
+        for (char c: t.toCharArray()) {
+            map[c]++;
+        }
+        int slow = 0, fast = 0, minLeft = 0, minLen = Integer.MAX_VALUE, count = t.length();
+        //step2: 滑动窗口 fast指针往前找, 如果MAP里出现过,那么对应的字母减少1, 找到长度为t的长度的字母(也就是count为0的时候)
+        while (fast < s.length()) {
+            char c1 = s.charAt(fast);
+            if (map[c1] > 0) {
+                count--;
+            }
+            map[c1]--;
+            fast++;
+            //step3: 慢指针去除重复的字母, 只要左指针往前走,这里不是很懂
+            while (count == 0) {
+                if (minLen > fast - slow) {
+                    minLen = fast - slow;
+                    minLeft = slow;
+                }
+                char c2 = s.charAt(slow);
+                map[c2]++;
+                if (map[c2] > 0) count++;
+                slow++;
+            }
+        }
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(minLeft, minLeft + minLen);
+
+    }
+}
