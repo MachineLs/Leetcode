@@ -17,3 +17,17 @@ class Solution {
         return max;
     }
 }
+
+class Solution {
+    public int maxArea(int[] height) {
+        int left = 0, right = height.length - 1, res = 0;
+        while (left < right) {
+            int tmp = Math.min(height[left], height[right]) * (right - left); //注意我错在right - left + 1, right=2,left=1,宽是1,不需要+1了
+            res = Math.max(tmp, res);
+            if (height[left] > height[right]) right--;
+            else left++;
+           
+        }
+        return res;
+    }
+}
