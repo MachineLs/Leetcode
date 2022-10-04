@@ -1,0 +1,19 @@
+Solution1: sort and add to the map
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        //Step1: 对每个String排序,放到map里,
+        //step2: 如果没有就存一个空的list,如果有就当前String加到list里
+        if (strs.length == 0) return new ArrayList<>();
+        HashMap<String, List> map = new HashMap<>();
+        for (String word : strs) {
+            // Arrays.sort(word);//我错在String不能sort
+            char[] tmp = word.toCharArray();
+            Arrays.sort(tmp);
+            String key = String.valueOf(tmp);
+            if (!map.containsKey(key)) map.put(key, new ArrayList<>());
+            map.get(key).add(word);
+        }
+        return new ArrayList(map.values());//我错在直接返回map.values()
+    }
+}
+//O(nklogk) and O(nk) n is word and k is the key length
