@@ -1,3 +1,4 @@
+Solution3 最好 O(n^2) and O(1)
 Solution1: 暴力,超时
 class Solution {
     public int countSubstrings(String s) {
