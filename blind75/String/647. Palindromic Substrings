@@ -1,0 +1,22 @@
+Solution1: 暴力
+class Solution {
+    public int countSubstrings(String s) {
+        int len = s.length();
+        int max = 0;
+        for (int i = 0; i < len; i++) {
+            for (int j = i + 1; j < len + 1; j++) {
+                String tmp = s.substring(i, j);
+                if (helper(tmp)) max++;
+            }
+        }
+        return max;
+    }
+    
+    private boolean helper(String array) {
+        int left = 0, right = array.length() - 1;
+        while (left < right) {
+            if (array.charAt(left) != array.charAt(right)) return false;
+        }
+        return true;
+    }
+}
