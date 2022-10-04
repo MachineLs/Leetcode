@@ -1,3 +1,7 @@
+Solution2最好 https://leetcode.com/problems/longest-palindromic-substring/discuss/2928/Very-simple-clean-java-solution
+
+视频解释 https://leetcode.cn/problems/longest-palindromic-substring/solution/zui-chang-hui-wen-zi-chuan-by-leetcode-solution/
+
 //Solution1: brute force, 对每一个字串判断是否是validPalindrome
 class Solution {
     public String longestPalindrome(String s) {
