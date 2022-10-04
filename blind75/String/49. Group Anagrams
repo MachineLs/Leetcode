@@ -17,3 +17,26 @@ class Solution {
     }
 }
 //O(nklogk) and O(nk) n is word and k is the key length
+
+Solution2: use int[]count, the key is the count[i] add"#" for special case;
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        if (strs.length == 0) return new ArrayList();
+        Map<String, List> res = new HashMap<>();
+        int[] count = new int[26];
+        for (String s : strs) {
+            Arrays.fill(count, 0);//相当于每次把count重置为0;
+            for (char c : s.toCharArray()) count[c - 'a']++;
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 26; i++) {
+                sb.append('#');
+                sb.append(count[i]);
+            }
+            String key = sb.toString();
+            if (!res.containsKey(key)) res.put(key, new ArrayList<>());
+            res.get(key).add(s);
+        }
+        return new ArrayList(res.values()); //不可以有<> cannot infer type arguments for ArrayList<>
+    }
+    //O(nk) and O(nk)
+}
