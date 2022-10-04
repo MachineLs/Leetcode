@@ -45,7 +45,7 @@ class Solution {
     }
 }
 
-Solution3: for循环从中间向两边扩展
+Solution3: for循环从中间向两边扩展 O(n^2) and O(1)
 class Solution {
 
 //Step1: We choose all possible centers for potential palindromes:
