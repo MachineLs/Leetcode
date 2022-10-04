@@ -1,4 +1,4 @@
-Solution1: 暴力
+Solution1: 暴力,超时
 class Solution {
     public int countSubstrings(String s) {
         int len = s.length();
@@ -17,6 +17,30 @@ class Solution {
         while (left < right) {
             if (array.charAt(left) != array.charAt(right)) return false;
         }
+        return true;
+    }
+}
+Solution2: 暴力不超时,不需要用substring
+class Solution {
+    
+    public int countSubstrings(String s) {
+        int ans = 0;
+        for (int start = 0; start < s.length(); ++start)
+            for (int end = start; end < s.length(); ++end) 
+                ans += isPalindrome(s, start, end) ? 1 : 0;
+
+        return ans;
+    }
+    
+    private boolean isPalindrome(String s, int start, int end) {
+        while (start < end) {
+            if (s.charAt(start) != s.charAt(end)) 
+                return false;
+
+            ++start;
+            --end;
+        }
+
         return true;
     }
 }
