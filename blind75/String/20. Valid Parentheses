@@ -1,0 +1,25 @@
+class Solution {
+    //O(n) and O(n)
+    //Step1: 把open parentheses and close parentheses作为key,value放到map里
+    //step2: 用stack存open parentheses, 遇到close的时候, stack把对应的括open出栈, 并且用map检查对应的close是不是一直. (如果stack提前为空,提前返回false);
+    //step3: 如果遍历完了, stack也空了,说明true,如果stack还有说明false;
+    //ps:本题有两个stack判空的操作, 第一个说明 close数量提前大于open, 第二个也是最后一个判空,判定的是open总数量大于close的情况
+    private static final Map<Character, Character> map = Map.of('(', ')',
+                                                                   '{', '}',
+                                                                   '[', ']'); //注意必须要用Map.of, M要大写, hashMap没有of 
+    public boolean isValid(String s) {
+        Deque<Character> stack = new ArrayDeque<>();
+        for (char c: s.toCharArray()) {
+            if (map.containsKey(c)) {
+                stack.addFirst(c);
+            } else {
+                if (stack.isEmpty()) return false;
+                char open = stack.removeFirst();//removeFirst()里不能传参
+                if (map.get(open) != c) {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+}
