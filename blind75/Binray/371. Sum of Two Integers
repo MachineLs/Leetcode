@@ -1,5 +1,5 @@
 Solution1
-//这个solution的思路是把 5,6 -> 3,8 -> 11,0 当最后循环完毕b是0,就不用考虑进位的了 O(n) and O(1)
+//这个solution的思路是把 5,6 -> 3,8 -> 11,0 当最后循环完毕b是0,就不用考虑进位的了 O(1) and O(1)
 class Solution {
     public int getSum(int a, int b) {
         while (b != 0) {
