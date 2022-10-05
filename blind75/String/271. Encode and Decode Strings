@@ -1,4 +1,6 @@
-//solution1: 思路就是用一些不常用的字符把他链接到一个完整的字符串,然后接受的时候在去掉对应的字符串, O(n) an O(n)
+//solution1: 
+这题是list String 变成一串 string实现高效传输, 中间加一些奇怪的字符,收到时候去掉即可, split(d，-1)解决空串问题
+
 public class Codec {
 
     // Encodes a list of strings to a single string.
@@ -18,7 +20,7 @@ public class Codec {
     public List<String> decode(String s) {
         if (s == Character.toString((char)258)) return new ArrayList();
         String d = Character.toString((char)257);
-        return Arrays.asList(s.split(d, -1));  //这里为什么要有个-1
+        return Arrays.asList(s.split(d, -1));  //如果split(String s)函数产生了空值，那么不会存到数组中。可以通过使用它的重载函数split(d，-1)实现空值的保存。
     }
 }
 
