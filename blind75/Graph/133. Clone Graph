@@ -24,3 +24,28 @@ class Solution {
         return map.get(node);
     }
 }
+
+DFS solution
+
+class Solution {
+    private Map<Node, Node> map = new HashMap<>();
+    public Node cloneGraph(Node node) {
+        if (node == null) return null;
+        // Node cloneNode = new Node(node.val, new ArrayList()); 我错在这里这些代码写在这里会覆盖cloneNode,为初始值,应该放在下面
+        // map.put(node, cloneNode);
+        if (map.containsKey(node)) {
+            return map.get(node);
+        }
+        
+        Node cloneNode = new Node(node.val, new ArrayList());
+        map.put(node, cloneNode);
+        
+        for (Node nei: node.neighbors) {
+            // if (!map.containsKey(nei)) {
+            //     map.put(nei, cloneGraph(nei));
+            // }
+            cloneNode.neighbors.add(cloneGraph(nei));
+        }
+        return cloneNode;
+    }
+}
