@@ -27,7 +27,7 @@ public class Solution {
         int res = 0;
         for (int i = 0; i < 32; i++) {
             if ((n & 1) == 1) res++;
-            n = n >>> 1; // 算术右移和逻辑右移都可以过case
+            n = n >>> 1; // 算术右移和逻辑右移都可以过case, 经过测试 >> 和 >>> 都是左边补0
         }
         return res;
     }
