@@ -1,0 +1,26 @@
+Solution1: BFS, 我错在不知道怎么实现复制node的邻居
+class Solution {
+    public Node cloneGraph(Node node) {
+        //O(m+n) and O(n)
+        //conner case
+        if (node  == null) return null;
+        //对于bfs来说, 每次我们从q里拿出一个node, 只需要把没有访问的邻居放进map,然后进queue, 完成后复制他的邻居
+        //实现复制:从map里get到cur(这一步实际是查到复制node的地址),在新复制的节点的neibour list里,加入对应新复制的node)
+        Map<Node, Node> map = new HashMap<>();
+        Queue<Node> q = new LinkedList<>();
+        q.offer(node);
+        map.put(node, new Node(node.val, new ArrayList()));//错在这一步,如何复制一个node,并且加入map
+        while (!q.isEmpty()) {
+            Node cur = q.poll();
+            for (Node nei : cur.neighbors) {
+                if (!map.containsKey(nei)) {
+                    map.put(nei, new Node(nei.val, new ArrayList()));//错在这里,不知道怎么复制邻居, 实际就是加入map 
+                    q.offer(nei);
+                }
+                map.get(cur).neighbors.add(map.get(nei));//然后在下面的代码里查询cur,并在其对应的neibourslist加入 查询到的nei节点(可能会有多个)
+                // q.offer(nei);
+            }
+        }
+        return map.get(node);
+    }
+}
