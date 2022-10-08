@@ -1,3 +1,5 @@
+复习:10/8/2022(x)
+
 Solution: res为0, 在32次循环里, res左移1位, 如果n的末尾是1, res加上1, 然后n算术右移一位
 reference: 解释的很清楚 https://leetcode.com/problems/reverse-bits/discuss/54738/Sharing-my-2ms-Java-Solution-with-Explanation
 
