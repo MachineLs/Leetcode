@@ -1,3 +1,61 @@
+第二次错,还是不知道该传什么进queue(入度为0的节点,这里直接传int课程数字就可以)
+
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        // 0 -> 1 ->3   
+        //   \ 
+        //    2 /
+       
+        int len = prerequisites.length;
+        List<List<Integer>> graph = new ArrayList<>(len);
+        //我错在这里没有给graph加上对应course的空的list, 导致graph是null,并没没办法get(1)
+        for (int i = 0; i < numCourses; i++) {
+            graph.add(new ArrayList());
+        }
+        
+        for (int[] prerequisite : prerequisites) {
+            int x = prerequisite[0];
+            int y = prerequisite[1];
+            graph.get(y).add(x);
+        }
+        // (1,2) (3) (3) ();
+        return helper(graph);
+    }
+    
+    private boolean helper(List<List<Integer>> graph) {
+        int numCourse = graph.size();
+        int[] incommingEdges = new int[numCourse];
+        for (int x = 0; x < numCourse; x++) {
+            // incommingEdges[x] = graph.get(x); 错在这里不知道怎么实现入度
+            for (int y : graph.get(x)) {
+                incommingEdges[y]++;
+            }
+        }
+        Queue<Integer> q = new LinkedList<>();
+        int expand = 0;
+        // q.offer(graph); 错在这里想把graph传进去, 拓扑排序需要传的其实是入度为0的节点, 这里传int数进去就好,而不是像bfs需要传node
+        for (int x = 0; x < numCourse; x++)
+            if (incommingEdges[x] == 0) {
+                q.offer(x);
+            }
+        
+        //bfs
+        while (!q.isEmpty()) {
+            int cur = q.poll();
+            expand++;
+            for (int nei : graph.get(cur)) {
+                if (--incommingEdges[nei] == 0) {
+                    q.offer(nei); //传的依然是入度为0的数
+                }
+            }
+        }        
+        return numCourse == expand;
+    }
+        
+}
+
+
+第一次做
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         List<List<Integer>> graph =  new ArrayList<>();
