@@ -1,3 +1,62 @@
+DFS and BFS solution both O(mn) and O(mn) m and n is rows and cols of the matrix;
+
+class Solution {
+    private int[][] DIRECTIONS = new int[][]{{1,0},{-1,0},{0,1},{0,-1}};
+    int rows;
+    int cols;
+    int[][] landHeights;
+    public List<List<Integer>> pacificAtlantic(int[][] matrix) {
+        if (matrix.length == 0 || matrix[0].length == 0) {
+            return new ArrayList<>();
+        }
+        
+        rows = matrix.length;
+        cols = matrix[0].length;
+        landHeights = matrix;
+        boolean[][] pReachable = new boolean[rows][cols];
+        boolean[][] aReachable = new boolean[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            dfs(i, 0, pReachable);
+            dfs(i,cols - 1, aReachable);
+        }
+        
+        for (int i = 0; i < cols; i++) {
+            dfs(0, i, pReachable);
+            dfs(rows -1, i, aReachable);
+        }
+        
+        List<List<Integer>> res = new ArrayList<>();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (pReachable[i][j] && aReachable[i][j]) {
+                    res.add(List.of(i,j));
+                }
+            }
+        }
+        return res;
+    }
+    
+    private void dfs(int row, int col, boolean[][] reachable) {
+        reachable[row][col] = true;
+        for (int[] dir : DIRECTIONS) {
+            int newRow = row + dir[0];
+            int newCol = col + dir[1];
+            if (newRow < 0 || newRow >= rows || newCol < 0 || newCol >= cols) {
+                continue;
+            }
+            if (reachable[newRow][newCol]) {
+                continue;
+            }
+            if (landHeights[newRow][newCol] < landHeights[row][col]) {
+                continue;
+            }
+            dfs(newRow, newCol, reachable);
+        }
+    }
+}
+
+
+
 Solution1: BFS 使用全局变量向四个方向分别查找
 //思路就是用两个queue,分别从太平洋和大西洋合法两个方向遍历图, 直到遍历到最高点(在往后面遍历雨水就流不出了),记录下这个boolean reachable[][]
 //细节1; 检查是否小于0或者大于边界, 细节2:检查是否坐标是否被访问过 细节3:检查是不是四个方向新的值是不是升序的, 如果遇到降序说明已经找到最高点,不必往下访问
