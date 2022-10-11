@@ -39,7 +39,7 @@ class Solution {
     }
 }
 
-dfs solution O(mn) and O(mn)
+dfs solution O(mn) and O(mn) 在最坏情况下，整个网格均为陆地，深度优先搜索的深度达到MN。
 class Solution {
     // int[][] D = new int[]{{1,0},{-1,0},{0,-1},{0,1}};
     //step1: 两个for循环访问矩阵, 当遇到1的时候用bfs把1的所有邻居都变成0, 利用一个count计算总共遇到多少次1,即可算出岛屿数量
