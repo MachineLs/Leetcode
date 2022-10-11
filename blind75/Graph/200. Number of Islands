@@ -1,0 +1,40 @@
+Bfs solution: TC and SC: O(mn) and worst O(mn) for bfs space, space complexity is decided by queue, in the worst case, all '1' in maxtrix
+class Solution {
+    // int[][] D = new int[]{{1,0},{-1,0},{0,-1},{0,1}};
+    //step1: 两个for循环访问矩阵, 当遇到1的时候用bfs把1的所有邻居都变成0, 利用一个count计算总共遇到多少次1,即可算出岛屿数量
+    public int numIslands(char[][] grid) {
+        int cnt = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == '1') {
+                    bfs(grid, i, j);
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
+    }
+    
+    //bfs的目的是把遇到的1的邻居都变成0
+    private void bfs(char[][] grid, int i, int j) {
+        //我错在q申明里存的Character
+        //数组存的是i,j的坐标,所以需要一个int[], int[0]是i, int[1]是j
+        Queue<int[]> q = new LinkedList<>();
+        q.offer(new int[]{i, j});
+        while (!q.isEmpty()) {
+            int[] cur = q.poll();
+            i = cur[0];
+            j = cur[1];
+            
+            // grid[i][j] = '0';
+            
+            if (i >= 0 && j >=0 && i < grid.length && j < grid[0].length && grid[i][j] == '1') {
+                grid[i][j] = '0';
+                q.offer(new int[]{i+1, j});
+                q.offer(new int[]{i-1, j});
+                q.offer(new int[]{i, j+1});
+                q.offer(new int[]{i, j-1});
+            }
+        }
+    }
+}
