@@ -1,4 +1,4 @@
-1,先做成邻接表 然后判断tree 性质1: n个node 必须有n-1个edge 性质2: tree必须是无环的dfs判断
+1,先做成邻接表 然后判断tree 性质1: n个node 必须有n-1个edge 性质2: tree必须是无环的dfs判断 性质3:tree是connected,一个节点可以到达任意节点,不允许孤立的节点存在
 class Solution {
     private List<List<Integer>> adjacencyList = new ArrayList<>();
     private Set<Integer> seen = new HashSet<>();
