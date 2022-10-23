@@ -1,4 +1,4 @@
-1,先做成邻接表 然后判断tree 性质1: n个node 必须有n-1个edge 性质2: tree必须是无环的dfs判断 性质3:tree是connected,一个节点可以到达任意节点,不允许孤立的节点存在
+Solution1: 先做成邻接表 然后判断tree 性质1: n个node 必须有n-1个edge 性质2: tree必须是无环的dfs判断 性质3:tree是connected,一个节点可以到达任意节点,不允许孤立的节点存在
 class Solution {
     private List<List<Integer>> adjacencyList = new ArrayList<>();
     private Set<Integer> seen = new HashSet<>();
@@ -32,5 +32,62 @@ class Solution {
             }
         }
         return true;
+    }
+}
+
+Solution2: 拓扑排序,出度入度算一编,入度为1的进队,性质1:判断是否有环,性质2:n个节点必须n-1个边,性质3:bfs遍历完个数必须相等于n
+
+class Solution {
+    public boolean validTree(int n, int[][] edges) {
+        //step1: check if its union-found 
+        int len = edges.length;
+        if (n == 1 && len == 0) {
+            return true;
+        }
+        if (n - 1 != len) {
+            return false;
+        }
+        
+        //build graph and incomingEdges
+        List<List<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < n; i++) { 
+            graph.add(new ArrayList<>());
+        }
+        //制作邻接表
+        for (int i = 0; i < len; i++) {
+            int[] edge = edges[i];
+            int x = edge[0];
+            int y = edge[1];
+            graph.get(y).add(x);
+            graph.get(x).add(y);
+        }
+        return helper(graph, n);
+    }
+    private boolean helper(List<List<Integer>> graph, int n){
+        int expanded = 0;
+        int[] incomingEdges = new int[n];
+        for (int x = 0; x < n; x++) {
+            for (int y : graph.get(x)) {
+                incomingEdges[y]++;
+            }
+        }
+        Queue<Integer> q = new LinkedList<>(); //这里是queue 我错在List
+        //所以入度为1的节点入队,和bfs不一样
+        for (int x = 0; x < n; x++) {
+            if (incomingEdges[x] == 1) {
+                q.offer(x);
+            }
+        }
+
+        while (!q.isEmpty()) {
+            int cur = q.poll();
+            expanded++;
+            for (int nei : graph.get(cur)) {
+                if (--incomingEdges[nei] == 1) {
+                    q.offer(nei);
+                }
+            }
+        }
+        return expanded == n;
     }
 }
