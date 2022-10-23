@@ -1,0 +1,36 @@
+1,先做成邻接表 然后判断tree 性质1: n个node 必须有n-1个edge 性质2: tree必须是无环的dfs判断
+class Solution {
+    private List<List<Integer>> adjacencyList = new ArrayList<>();
+    private Set<Integer> seen = new HashSet<>();
+    public boolean validTree(int n, int[][] edges) {
+        
+        if (edges.length != n - 1) return false; //If tree have “n” vertices then it must have exactly “n-1” edges only.
+        
+        for (int i = 0; i < n; i++) {
+            adjacencyList.add(new ArrayList<>());
+        }
+        //无向图正方向,反方向分别来一遍,计算图的邻接矩阵
+        for (int[] edge : edges) {
+            adjacencyList.get(edge[0]).add(edge[1]);
+            adjacencyList.get(edge[1]).add(edge[0]);
+        }
+        // System.out.println("adjacencyList" + adjacencyList);   adjacencyList[[1, 2, 3], [0, 4], [0], [0], [1]]
+        
+        // We return true iff no cycles were detected, AND the entire graph has been reached.
+
+        //(0,-1) -1是固定写法,固定0的父节点就是-1
+        return dfs(0, -1) && seen.size() == n;   //用一个set,判断是否无环,如果dfs寻找到环了,set里必定存过,所以得是false,如果traverse完了,就是true
+    }
+    
+    public boolean dfs(int node, int parent) {
+        if (seen.contains(node)) return false;
+        seen.add(node);
+        for (int neighbour : adjacencyList.get(node)) {
+            if (parent != neighbour) {
+                boolean result = dfs(neighbour, node);
+                if (!result) return false;
+            }
+        }
+        return true;
+    }
+}
