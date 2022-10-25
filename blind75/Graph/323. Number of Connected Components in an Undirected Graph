@@ -1,4 +1,4 @@
-//dfs 用visited记录访问过的, 然后dfs所有连通节点, for循环计算总共执行了几次i(bfs也类似)
+//Solution1:dfs 用visited记录访问过的, 然后dfs所有连通节点, for循环计算总共执行了几次i(bfs也类似)
 class Solution {
     public int countComponents(int n, int[][] edges) {
         boolean[] visited = new boolean[n];
