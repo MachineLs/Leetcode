@@ -28,3 +28,35 @@ class Solution {
         }
     }
 }
+
+Solution2: bfs
+class Solution {
+    public int countComponents(int n, int[][] edges) {
+        boolean[] visited = new boolean[n];
+        int res = 0;
+        Queue<Integer> q = new LinkedList<>();
+
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                q.offer(i);
+                //我错在while得在q.offer下面,而不是在if下面,因为对于for循环,下面可能有多个联通的图,分别做bfs
+                while (!q.isEmpty()) {
+                    int cur = q.poll();
+                    visited[cur] = true;
+                    for (int[] edge : edges) {
+                        int x = edge[0];
+                        int y = edge[1];
+                        if (x == cur && !visited[y]) {
+                            q.offer(y);
+                        }
+                        if (y == cur && !visited[x]) {
+                            q.offer(x);
+                        }
+                    }
+                }
+                res++;
+            }
+        }
+        return res;
+    }
+}
