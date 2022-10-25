@@ -1,0 +1,30 @@
+//dfs 用visited记录访问过的, 然后dfs所有连通节点, for循环计算总共执行了几次i(bfs也类似)
+class Solution {
+    public int countComponents(int n, int[][] edges) {
+        boolean[] visited = new boolean[n];
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                dfs(edges, visited, i);
+                res++;
+            }
+        }
+        return res;
+    }
+
+    private void dfs(int[][] edges, boolean[] visited, int node) {
+        if (visited[node] == true) return;
+        visited[node] = true;
+        //怎么找到当前node
+        for (int[] edge : edges) {
+            int x = edge[0];
+            int y = edge[1];
+            if (node == x && !visited[y]) {
+                dfs(edges, visited, y);
+            }
+            if (node == y && !visited[x]) {
+                dfs(edges, visited, x);
+            }
+        }
+    }
+}
