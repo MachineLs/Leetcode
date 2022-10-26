@@ -91,3 +91,53 @@ class Solution {
         return expanded == n;
     }
 }
+
+//用并查集,分别查数组里每两个节点是否联通,如果有一个不联通说明,不是tree
+//在查联通的过程中,分别会查找A,B的父节点,如果A和B的父节点不是一个,说明不连通
+class UnionFind {
+    private int[] parent;
+    public UnionFind(int n) {
+        //初始化,所有node的父节点都是他们自己
+        parent = new int[n];
+        for (int node = 0; node < n; node++) {
+            parent[node] = node;
+        }
+    }
+    //没有路径压缩
+    // public int find(int A) {
+    //     while (parent[A] != A) {
+    //         A = parent[A];
+    //     }
+    //     return A;
+    // }
+    public int find(int A) {
+        if (A == parent[A]) return A;
+        //路径压缩 path compression
+        parent[A] = find(parent[A]);
+        return parent[A];
+    }
+
+    public void union(int A, int B) {
+        int rootA = find(A);
+        int rootB = find(B);
+        parent[A] = B;
+    }
+
+}
+class Solution {
+    public boolean validTree(int n, int[][] edges) {
+        if (edges.length != n - 1) return false;
+        UnionFind unionFind = new UnionFind(n);
+        for (int[] edge : edges) {
+            int A = unionFind.find(edge[0]);
+            int B = unionFind.find(edge[1]);
+            if (A == B) {
+                return false;
+            } else {
+                unionFind.union(A, B);
+                n--;
+            }
+        }
+        return n<=1;
+    }
+}
