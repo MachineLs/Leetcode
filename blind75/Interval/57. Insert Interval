@@ -20,3 +20,25 @@ class Solution {
         return res.toArray(new int[res.size()][]);
     }
 }
+
+自己实现,很多小错误
+class Solution {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        if (newInterval.length == 0) return intervals;
+        if (intervals.length == 0) return new int[][]{newInterval}; //我错在直接return newInterval 是 int[],要求返回int[][]
+        int L = newInterval[0], R = newInterval[1], len = intervals.length, j = 0;
+        List<int[]> res = new ArrayList<>();
+        while (j < len && intervals[j][1] < L) {
+            res.add(intervals[j]);// res.add(intervals[j][])我错在不会取
+            j++;//我错在j忘记++
+        }
+        while (j < len && intervals[j][0] <= R) {
+            L = Math.min(L, intervals[j][0]);
+            R = Math.max(R, intervals[j][1]);
+            j++;//我错在j忘记++
+        }
+        res.add(new int[]{L, R});
+        while (j < len) res.add(intervals[j++]); //我错在j忘记++
+        return res.toArray(new int[res.size()][]);//我错在toArrays
+    }
+}
