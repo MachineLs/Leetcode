@@ -1,0 +1,26 @@
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        if (k == nums.length) {
+            return nums;
+        }
+        
+        Map<Integer, Integer> count = new HashMap<>();
+        for (int n : nums) {
+            count.put(n, count.getOrDefault(n, 0) + 1);
+        }
+        Queue<Integer> minHeap = new PriorityQueue((a, b) -> count.get(a) - count.get(b));
+        //维护一个数量为k的minHeap
+        for (int n : count.keySet()) {
+            minHeap.add(n);
+            if (minHeap.size() > k) minHeap.poll();
+        }
+        
+        int[] top = new int[k];
+        for (int i = k - 1; i >= 0; i--) {
+            top[i] = minHeap.poll();
+        }
+        return top;
+    }
+    
+    //O(nlogk) and O(n+k)
+}
