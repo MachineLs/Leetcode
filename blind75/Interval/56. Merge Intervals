@@ -1,0 +1,25 @@
+solution1 : O(nlogn) and O(n)
+先sort,判断是否重叠 对于非重叠部分直接加, 对于重叠部分,更新每一个interval的右区间的值为当前interval的右区间的值
+
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        LinkedList<int[]> res = new LinkedList<>();
+        for (int[] interval : intervals) {
+            //检测是否重叠, 不重叠直接加到res里
+            // if the list of merged intervals is empty or if the current
+            // interval does not overlap with the previous, simply append it.
+            if (res.isEmpty() || res.getLast()[1] < interval[0]) {
+                res.add(interval);
+            } 
+            
+            if (res.getLast()[1] >= interval[0]){
+                //重叠就更新res最后一个int[]右边的区间为当前interval的右区间;
+                // otherwise, there is overlap, so we merge the current and previous interval
+                
+                res.getLast()[1] = Math.max(res.getLast()[1], interval[1]);
+            }
+        }
+        return res.toArray(new int[res.size()][]);
+    }
+}
