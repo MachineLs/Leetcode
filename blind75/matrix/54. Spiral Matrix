@@ -1,5 +1,6 @@
 //https://www.youtube.com/watch?v=mmQfavfpW_M&ab_channel=%E8%B4%BE%E8%80%83%E5%8D%9A
 //O(m*n) O(1)
+left - down - right -up  按照旋转顺序遍历矩阵, 并且更新初始和终止条件
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> res = new ArrayList<>();
