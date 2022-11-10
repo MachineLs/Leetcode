@@ -1,6 +1,7 @@
 Solution 1: HashMap O(n) and O(n)
 class Solution {
     public int[] twoSum(int[] nums, int target) {
+    //左右指针只可以用到允许sort的2sum变种里,sort完指针顺序都变了
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
             int complement = target - nums[i];
