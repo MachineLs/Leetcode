@@ -1,7 +1,6 @@
-Solution2, O(logn) and O(1)
-
 //https://leetcode.com/problems/search-in-rotated-sorted-array/discuss/14436/Revised-Binary-Search
 //主要思想是我们需要找到数组的一些部分，我们可以对其进行二分查找，这意味着我们需要找到一些已完成排序的部分，然后确定目标是在左边还是右边。至少有一段（左部分或右部分）是单调递增的。
+//注意,单调递增可以轻易判断,target是否在区间之内
 //如果整个左边部分是单调递增的，这意味着轴心点在右边部分
 //if left <= target < mid ------> drop the right half
 //否则 ------> drop the left half
