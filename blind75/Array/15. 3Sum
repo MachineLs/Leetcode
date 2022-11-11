@@ -1,4 +1,7 @@
-Solution 1: 使用twoSumII的方法并且进行了剪枝(prune) Time: O(n^2) and Space: O(n) or O(logn) depending on sorting algo
+Solution 1: 使用twoSumII的方法并且for循环里进行了剪枝prune(大于0之后的元素不可能相加还等于0), Time: O(n^2) and Space: O(n) or O(logn) depending on sorting algo
+//先sort 
+//for循环固定i=0不动, sum=0时候加到res里(可能有重复解, 别忘了left++, right--), sum小于0 left++, 大于0 right--,
+
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         Arrays.sort(nums);
