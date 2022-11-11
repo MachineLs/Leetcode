@@ -6,7 +6,8 @@ class Solution {
     //ps:本题有两个stack判空的操作, 第一个说明 close数量提前大于open, 第二个也是最后一个判空,判定的是open总数量大于close的情况
     private static final Map<Character, Character> map = Map.of('(', ')',
                                                                    '{', '}',
-                                                                   '[', ']'); //注意必须要用Map.of, M要大写, hashMap没有of 
+                                                                   '[', ']'); //注意必须要用Map.of, map小写错误的, hashMap没有of, 
+                                                                               //我错在(('(', ')'),('{', '}'), ('[', ']'))
     public boolean isValid(String s) {
         Deque<Character> stack = new ArrayDeque<>();
         for (char c: s.toCharArray()) {
