@@ -10,7 +10,7 @@ class Solution {
                                                                                //我错在(('(', ')'),('{', '}'), ('[', ']'))
     public boolean isValid(String s) {
         Deque<Character> stack = new ArrayDeque<>();
-        for (char c: s.toCharArray()) {
+        for (char c: s.toCharArray()) { //我错在忘记toCharArray(),且toCharArray后面忘记加()
         //把遇到的左括号放到stack里
             if (map.containsKey(c)) {
                 stack.addFirst(c);
