@@ -10,10 +10,12 @@ class Solution {
     public boolean isValid(String s) {
         Deque<Character> stack = new ArrayDeque<>();
         for (char c: s.toCharArray()) {
+        //把遇到的左括号放到stack里
             if (map.containsKey(c)) {
                 stack.addFirst(c);
             } else {
-                if (stack.isEmpty()) return false;
+            //else是右括号
+                if (stack.isEmpty()) return false;//左右不匹配 直接false
                 char open = stack.removeFirst();//removeFirst()里不能传参
                 if (map.get(open) != c) {
                     return false;
