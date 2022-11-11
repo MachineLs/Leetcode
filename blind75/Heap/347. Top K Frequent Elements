@@ -1,3 +1,10 @@
+//int[] A = {1,2,3,4,5,6,7,8,9};
+//minHeap是按照1-9顺序出1,2,3..9
+//所以如果让minHeap输出TopK, 最后的for循环就得倒着输出从k-1 到0
+
+//maxHeap是按照9-1顺序出9,8,7..1
+//所以让maxHeap输出TopK, i从0到k正序即可
+
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
         if (k == nums.length) {
