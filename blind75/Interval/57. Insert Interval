@@ -8,14 +8,20 @@ class Solution {
         if(intervals.length == 0) return new int[][]{newInterval};
         List<int[]> res = new ArrayList<>();
         int L = newInterval[0], R = newInterval[1], len = intervals.length, j = 0;
+        //注意三种情况用三个while判断
+        //重叠前直接加入List
         while(j < len && intervals[j][1] < L) res.add(intervals[j++]);      //重叠前直接加入List
-        while(j < len && intervals[j][0] <= R){     //处理重叠区域
+        
+        //重叠的部分, 更新L为interval[i]的最小值, R为interval[i]的最大值
+        while(j < len && intervals[j][0] <= R){     //我错在intervals[i][0] >= L
             L = Math.min(L, intervals[j][0]);
             R = Math.max(R, intervals[j][1]);
             j++;
         }
         res.add(new int[]{L,R});
-        while(j < len) res.add(intervals[j++]);     //不会再出现重叠区域，直接加入List
+        
+        //不会再出现重叠区域，直接加入List
+        while(j < len) res.add(intervals[j++]);     
         // return res.toArray(new int[res.size()][]);
         return res.toArray(new int[res.size()][]);
     }
