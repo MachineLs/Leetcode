@@ -1,4 +1,4 @@
-找到非重叠部分,加入res, 处理重叠部分更新LR后加入res, 找到后面的非重叠部分加入res
+三种情况用三个while判断, step1:找到非重叠部分,加入res, setp2:处理重叠部分更新LR后加入res, step3:找到后面的非重叠部分加入res 
 Step1: 遍历整个interval, L和R初始化成newInterval的左右区间, 把interval里右边的值小于L的直接加入res,非重叠部分不需要处理
 Step2:当interval里的左边的值小于R时候, 把L值更新为interval里的最小值, 把R值更新为interval里的最大值, 
 Step3: 把[L,R]加入结果,并且把后面不需要遍历的interval加入到结果里
@@ -7,8 +7,7 @@ class Solution {
         if(newInterval.length == 0) return intervals;
         if(intervals.length == 0) return new int[][]{newInterval};
         List<int[]> res = new ArrayList<>();
-        int L = newInterval[0], R = newInterval[1], len = intervals.length, j = 0;
-        //注意三种情况用三个while判断
+
         //重叠前直接加入List
         while(j < len && intervals[j][1] < L) res.add(intervals[j++]);      //重叠前直接加入List
         
