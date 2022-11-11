@@ -6,7 +6,7 @@ class Solution {
         
         Map<Integer, Integer> count = new HashMap<>();
         for (int n : nums) {
-            count.put(n, count.getOrDefault(n, 0) + 1);
+            count.put(n, count.getOrDefault(n, 0) + 1); //注意我错在count.getOrDefault(0, n), 应该是n在前面
         }
         Queue<Integer> minHeap = new PriorityQueue((a, b) -> count.get(a) - count.get(b));
         //维护一个数量为k的minHeap
