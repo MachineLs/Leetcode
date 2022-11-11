@@ -1,3 +1,37 @@
+Solution2, O(logn) and O(1)
+
+//https://leetcode.com/problems/search-in-rotated-sorted-array/discuss/14436/Revised-Binary-Search
+//主要思想是我们需要找到数组的一些部分，我们可以对其进行二分查找，这意味着我们需要找到一些已完成排序的部分，然后确定目标是在左边还是右边。至少有一段（左部分或右部分）是单调递增的。
+//如果整个左边部分是单调递增的，这意味着轴心点在右边部分
+//if left <= target < mid ------> drop the right half
+//否则 ------> drop the left half
+//如果整个右边部分是单调递增的，这意味着轴心点在左边部分
+//if mid < target <= right ------> drop the left half
+//否则 ------> drop the right half
+class Solution {
+    public int search(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) return mid;
+            else if (nums[mid] >= nums[left]) { //说明left到mid是升序
+                //target和left和mid比大小,如果target在[left, mid-1]之间(左边), 那right = mid -1;
+                if (target >= nums[left] && target < nums[mid]) right = mid - 1; 
+                //除了这种情况之外, target一定在右边
+                else left = mid + 1;
+            } else { //反之left到mid是降序
+                //需要检查target和mid以及right比大小, 如果target大于mid且小于等于right,说明在右边, left = mid+1,
+                if (target <= nums[right] && target > nums[mid]) left = mid + 1; 
+                // 除了这种情况之外, target一定在左边
+                else right = mid - 1;
+            }
+        }
+        return -1;
+    }
+}
+
+
+
 Solution1 : high level 找到inflection point, 分别对左右两边做2分查找即可 O(logn) and O(1)
 class Solution {
     public int search(int[] nums, int target) {
