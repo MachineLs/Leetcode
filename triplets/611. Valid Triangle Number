@@ -1,0 +1,22 @@
+//本质上是一个3sum的变种题, 但是如果sort后,i从小的开始,根据条件left++, right--会漏解 ([2,2,3,4])
+//所以我们需要从后面向前面遍历, i从最后一个数开始, left和right判断区间计算负荷条件的元素组个数, 如果nums[left] + nums[right] > nums[i], 那么left左边的一定满足条件
+//此时只需要res += right - left;
+class Solution {
+    public int triangleNumber(int[] nums) {
+        Arrays.sort(nums);
+        int n = nums.length, res = 0;
+        for (int i = n - 1; i >= 2; i--) {
+            int left = 0, right = i - 1;
+            while (left < right) {
+                if (nums[left] + nums[right] > nums[i]) {
+                res += right - left;
+                right--;
+            } else {
+                left++;
+            }
+            }
+
+        }
+        return res;
+    }
+}
