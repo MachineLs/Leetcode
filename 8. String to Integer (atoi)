@@ -1,0 +1,32 @@
+//先识别出空格,识别出加减号,识别字母, 计算每个数,在之前的基础上加上10, 然后处理max, min越界问题
+class Solution {
+    public int myAtoi(String s) {
+        //conner case
+        if (s == null || s.length() == 0) return 0;
+        int idx = 0;
+        //identify ' ' and the non-digit char
+        while (idx < s.length() && s.charAt(idx) == ' ') idx++;
+        //using sign to record the '+' or '-'
+        int sign = 1;
+        if (s.charAt(idx) == '+' || s.charAt(idx) == '-') {
+            sign = s.charAt(idx) == '+' ? 1 : -1;
+        }
+        //using res to record the integer we want
+        int res = 0;
+        while (idx < s.length()) {
+            System.out.println(res);
+            int digit = s.charAt(idx) - '0';
+            if (digit < 0 || digit > 0) break;
+            int newRes = res * 10 + digit;
+            //judge if the res is out of range, we will set the digit to max or min
+            //res > max_value / 10 or
+            //res == max_val / 10 and max_value % 10 < digit
+            if (res > Integer.MAX_VALUE || (res == Integer.MAX_VALUE && Integer.MAX_VALUE % 10 < digit)) {
+                res = sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            }
+            res = newRes;
+            idx++;
+        }
+        return res * sign;
+    }
+}
