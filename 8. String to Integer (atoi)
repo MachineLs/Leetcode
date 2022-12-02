@@ -6,23 +6,24 @@ class Solution {
         int idx = 0;
         //identify ' ' and the non-digit char
         while (idx < s.length() && s.charAt(idx) == ' ') idx++;
+        if (idx == s.length()) return 0;
         //using sign to record the '+' or '-'
         int sign = 1;
         if (s.charAt(idx) == '+' || s.charAt(idx) == '-') {
             sign = s.charAt(idx) == '+' ? 1 : -1;
+            idx++;
         }
         //using res to record the integer we want
         int res = 0;
         while (idx < s.length()) {
-            System.out.println(res);
             int digit = s.charAt(idx) - '0';
-            if (digit < 0 || digit > 0) break;
+            if (digit < 0 || digit > 9) break;
             int newRes = res * 10 + digit;
             //judge if the res is out of range, we will set the digit to max or min
             //res > max_value / 10 or
             //res == max_val / 10 and max_value % 10 < digit
-            if (res > Integer.MAX_VALUE || (res == Integer.MAX_VALUE && Integer.MAX_VALUE % 10 < digit)) {
-                res = sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            if (res > Integer.MAX_VALUE / 10 || (res == Integer.MAX_VALUE / 10 && Integer.MAX_VALUE % 10 < digit)) {
+                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE; //越界了,直接return,不需要在判断后面的了, 我错在还在更新值
             }
             res = newRes;
             idx++;
