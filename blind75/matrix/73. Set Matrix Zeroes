@@ -18,7 +18,7 @@ class Solution {
                 rowFirst = true;
             }
         }
-        //扫描矩阵,除去[0,0],其他遇到0则把对于的十字上的数变成0;
+        ////扫描除[0,0]之外的元素, 如果i,j为0,则把对应的第一行和第一列标记为0
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
                 if (matrix[i][j] == 0) {
@@ -26,7 +26,7 @@ class Solution {
                 }
             }
         }
-        //扫描矩阵,除去[0,0],如果第一行或者第一列有0,则对应的i,j也需要变成0
+        //上个for循环不足以把十字上的对应所有元素都变成0;
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
                 if (matrix[i][0] == 0 || matrix[0][j] == 0) {
@@ -56,45 +56,4 @@ class Solution {
 //在实际代码中，我们首先预处理出两个标记变量，接着使用其他行与列去处理第一行与第一列，然后反过来使用第一行与第一列去更新其他行与列，最后使用两个标记变量更新第一行与第一列即可。
 
 //O(m+n) and O(1)
-class Solution {
-    public void setZeroes(int[][] matrix) {
-        int m = matrix.length, n = matrix[0].length;
-        boolean flagCol0 = false, flagRow0 = false;
-        for (int i = 0; i < m; i++) {
-            if (matrix[i][0] == 0) {
-                flagCol0 = true;
-            }
-        }
-        for (int j = 0; j < n; j++) {
-            if (matrix[0][j] == 0) {
-                flagRow0 = true;
-            }
-        }
-
-        for (int i = 1; i < m; i++) { //我错在从0开始,注意这里从1开始,因为我们用第一个做标记为0,所以不可以从0开始
-            for (int j = 1; j < n; j++) {
-                if (matrix[i][j] == 0) {
-                    matrix[i][0] = 0;
-                    matrix[0][j] = 0;
-                }
-            }
-        }
-        for (int i = 1; i < matrix.length; i++) {
-            for (int j = 1; j < matrix[0].length; j++) { //这里同样从1开始, 和上面一样我错在从0开始
-                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
-                    matrix[i][j] = 0;
-                }
-            }
-        }
-        if (flagCol0) {
-            for (int i = 0; i < m; i++) {
-                matrix[i][0] = 0;
-            }
-        }
-        if (flagRow0) {
-            for (int j = 0; j < n; j++) {
-                matrix[0][j] = 0;
-            }
-        }
-    }
-}
+-
