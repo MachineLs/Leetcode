@@ -1,9 +1,9 @@
 class Solution {       
-    //扫描string,把多的特殊情况都剪掉;
+    //扫描string,把多的特殊情况都提前减掉,;
     //然后再按正常情况遍历并且加上对应的数字即可
     public int romanToInt(String s) {
         int sum = 0;
-        if (s.indexOf("IV") != -1) sum -= 2;
+        if (s.indexOf("IV") != -1) sum -= 2; //indexOf 返回-1代表不存在, 此api, O(n)
         if (s.indexOf("IX") != -1) sum -= 2;
         if (s.indexOf("XL") != -1) sum -= 20;
         if (s.indexOf("XC") != -1) sum -= 20;
@@ -23,4 +23,5 @@ class Solution {
         
         return sum;
     }
+    //O(n) and O(1)
 }
