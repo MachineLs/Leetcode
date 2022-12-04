@@ -1,3 +1,56 @@
+12/4/2022
+//我们需要额外使用两个标记变量分别记录第一行和第一列是否原本包含 00,否则会漏处理
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int m = matrix.length, n = matrix[0].length;
+        //colFirst代表记录第一列是否要变成0,如果第一列有0,则最后需要把第一列变成0
+        //rowFirst代表第一行是否要变成0,如果第一行有0,则最后需要把第一行都变成0
+        boolean rowFirst = false, colFirst = false;
+        //扫描第一列
+        for (int i = 0; i < m; i++) {
+            if (matrix[i][0] == 0) {
+                colFirst = true;
+            }
+        }
+        //扫描第一行
+        for (int j = 0; j < n; j++) {
+            if (matrix[0][j] == 0) {
+                rowFirst = true;
+            }
+        }
+        //扫描矩阵,除去[0,0],其他遇到0则把对于的十字上的数变成0;
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (matrix[i][j] == 0) {
+                    matrix[i][0] = matrix[0][j] = 0;
+                }
+            }
+        }
+        //扫描矩阵,除去[0,0],如果第一行或者第一列有0,则对应的i,j也需要变成0
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        //post processing, 如果第一行,第一列标记为true,则需要把对应的行列都变成0
+        if (colFirst) {
+            for (int i = 0; i < m; i++) {
+                matrix[i][0] = 0;
+            }
+        }
+        
+        if (rowFirst) {
+            for (int j = 0; j < n; j++) {
+                matrix[0][j] = 0;
+            }
+        }
+    }
+}
+
+
+
 //我们需要额外使用两个标记变量分别记录第一行和第一列是否原本包含 00。
 
 //在实际代码中，我们首先预处理出两个标记变量，接着使用其他行与列去处理第一行与第一列，然后反过来使用第一行与第一列去更新其他行与列，最后使用两个标记变量更新第一行与第一列即可。
