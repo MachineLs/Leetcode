@@ -1,0 +1,25 @@
+class Solution {
+    public int trap(int[] height) {
+    //使用左右指针, while 循环 维护一个lmax and rmax变量, 确定左右的最大值,水是根据最大值判断
+    //判断左边界右边界谁小, 谁小,水根据谁取, 
+        if (height == null || height.length == 0) return 0;
+        int left = 0;
+        int right = height.length - 1;
+        int result = 0;
+        int lmax = height[left];
+        int rmax = height[right];
+        while (left < right) {
+            if (height[left] <= height[right]) {
+                result += Math.max(0, lmax - height[left]); 
+                //如果左边小于右边,lmax更新为小的,lmax和array[left]
+                lmax = Math.max(lmax, height[left]);
+                left++;
+            } else {
+                result += Math.max(0, rmax - height[right]);
+                rmax = Math.max(rmax, height[right]);
+                right--;
+            }
+        }
+        return result;
+    }
+}
