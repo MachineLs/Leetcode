@@ -1,0 +1,20 @@
+//三种case, 1:最后不是9, 2:最后是9,要看前一位是不是9(用for循环) 3:如果是test sample是9,99这种情况, 直接变成10或者100
+class Solution {
+    public int[] plusOne(int[] digits) {
+        int n = digits.length - 1;
+        for (int i = n; i >= 0; i--) {
+            //case1:如果小于9,直接++
+            if (digits[i] < 9) {
+                digits[i]++;
+                return digits;
+            }
+            //case2:如果等于9,向前查询前一位是否为9
+            digits[i] = 0;
+        }
+        //case3:特殊case 9999 -> 10000
+        digits = new int[n + 2]; //错在这里int[]{n+2}, 大括号里面是赋值
+        // System.out.println(Arrays.toString(digits));
+        digits[0] = 1; 
+        return digits;
+    }
+}
