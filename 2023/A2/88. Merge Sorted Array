@@ -1,0 +1,38 @@
+Solution1:
+把nums2放到nums1后面为0的位置,然后sort即可 O((m+n)log(m+n));
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        for (int i = 0; i < n; i++) {
+            nums1[m++] = nums2[i];
+        }
+        Arrays.sort(nums1);
+    }
+}
+
+Solution2: 最优解
+新建一个int[], 谁小取谁加谁, 然后在一个for循环把值覆盖回nums1;O(m+n) O(m+n)
+
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int p1 = 0, p2 = 0;
+        int[] sorted = new int[m+n];
+        int cur = 0;
+        while (p1 < m || p2 < n) {
+            if (p1 == m) {
+                cur = nums2[p2++];
+            } else if (p2 == n) {
+                cur = nums1[p1++];
+            } else if (nums1[p1] < nums2[p2]) {
+                cur = nums1[p1++];
+            }
+            // } else if (nums2[p1] >= nums2[p2]) {
+            else {
+                cur = nums2[p2++];
+            }
+            sorted[p1+p2-1] = cur;
+        }
+        for (int i = 0; i < m+n; i++) {
+            nums1[i] = sorted[i];
+        }
+    }
+}
