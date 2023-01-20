@@ -10,7 +10,7 @@ class Solution {
     }
 }
 
-Solution2: binary search, 二分查找
+Solution2: binary search, 二分查找: 1-x是个排好序的数,所以可以用二分查找来找这个解
 
 class Solution {
     public int mySqrt(int x) {
