@@ -1,0 +1,27 @@
+Solution: 思路是把2D matrix转换成1d array
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int row = matrix.length, col = matrix[0].length;
+        int left = 0, right = row * col - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (get(matrix, mid) == target) {
+                return true;
+            } else if (get(matrix, mid) < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return false;
+    }
+
+    public int get(int[][] matrix, int idx) {
+        int col = matrix[0].length; //map 2d matrix to 1d array 和 row一点关系没有, 我错在i = idx / row
+        int i = idx / col;
+        int j = idx % col;
+        return matrix[i][j];
+    }
+}
+// [[1,1]] -> 1*2 matrix -> 0,1
+// left = 0, right = 1, mid = 0 -> get -> 1 < 2 -> left = 1, right = 1 -> mid = 1 --> get = 1 -> right = 0
