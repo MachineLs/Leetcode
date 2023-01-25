@@ -1,3 +1,4 @@
+ref:leetcn solution
 Solution1: 递归, 如果相等则head.next = head.next.next (因为第七行参数输入的也是head.next -> 删掉head.next), 如果不相等就 head.next = head.next
 一句话总结:第一次从左到右删掉所有重复元素, 然后从右到左弹栈返回head, 最后实现head删除所有指定val.
 如果不懂可以debug下
