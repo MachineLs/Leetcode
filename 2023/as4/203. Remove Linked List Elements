@@ -1,0 +1,32 @@
+Solution1: 递归, 如果相等则head.next = head.next.next (因为第七行参数输入的也是head.next -> 删掉head.next), 如果不相等就 head.next = head.next
+一句话总结:第一次从左到右删掉所有重复元素, 然后从右到左弹栈返回head, 最后实现head删除所有指定val.
+如果不懂可以debug下
+// 7,7,7,7 head = 7 
+
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        if (head == null) {
+            return head;
+        }
+        head.next = removeElements(head.next, val);
+        return head.val == val ? head.next : head;
+    }
+}
+
+Solution2: interative method:
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        if (head == null) return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode tmp = dummy;
+        while (tmp.next != null) {
+            if (tmp.next.val == val) {
+                tmp.next = tmp.next.next;
+            } else {
+                tmp= tmp.next;
+            }
+        }
+        return dummy.next;
+    }
+}
