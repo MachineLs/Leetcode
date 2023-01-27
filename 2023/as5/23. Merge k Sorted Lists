@@ -1,0 +1,22 @@
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        PriorityQueue<ListNode> minHeap = new  PriorityQueue<>((a ,b) -> a.val - b.val);
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        for (ListNode node : lists) {
+            if (node != null) { //我错在这里没判断node != null, 因为有的node会是null
+                minHeap.offer(node);
+            }
+            
+        }
+        while (!minHeap.isEmpty()) {
+            cur.next = minHeap.poll();
+            if (cur.next.next != null) {
+                minHeap.offer(cur.next.next);
+            }
+            cur = cur.next;
+        }
+        return dummy.next;
+    }
+}
+// nlog(k) and O(n) n是新的list的空间
