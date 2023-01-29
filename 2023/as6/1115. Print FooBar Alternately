@@ -1,0 +1,40 @@
+1, 设置一个flag,默认值为0, step1: 如果flag不等于0, 那么就等, 如果等于0那就打印Foo,并且flag+1 step2: 如果flag不等1, 那么就等, 等flag变成1, 打印bar,然后把flag变成0.
+通过这种方法来实现异步.
+class FooBar {
+    private int n;
+    private int flag;
+    public FooBar(int n) {
+        this.n = n;
+    }
+
+    public void foo(Runnable printFoo) throws InterruptedException {
+        synchronized (this) {
+            for (int i = 0; i < n; i++) {
+                if (flag != 0) {
+                    this.wait();
+                }
+                // printFoo.run() outputs "foo". Do not change or remove this line.
+                printFoo.run();
+                this.notify();
+                flag++;
+            }
+        }
+
+    }
+
+    public void bar(Runnable printBar) throws InterruptedException {
+        
+        synchronized (this) {
+            for (int i = 0; i < n; i++) {
+                if (flag != 1) {
+                    this.wait();
+                }
+                // printBar.run() outputs "bar". Do not change or remove this line.
+                printBar.run();
+                this.notify();
+                flag--;
+            }
+        }
+
+    }
+}
