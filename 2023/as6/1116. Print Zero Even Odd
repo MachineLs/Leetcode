@@ -1,4 +1,10 @@
 ref: https://leetcode.cn/problems/print-zero-even-odd/solutions/1623560/by-be_a_better_coder-axp4/
+solution: step1: zero: flag = 1, 我们想打0, 那么1%2 != 0 所以不会wait, 然后打印0, flag+此时flag=2
+          step2: even: 2 % 4 != 0, 所以wait
+          step3: odd: 2 % 4 = 2, 所以不wait, print odd number flag++ -> flag = 3
+          step4: 又进zero 打印完毕 flag = 4
+          step5: 进 even, 
+          然后循环
 
 class ZeroEvenOdd {
     private int n;
