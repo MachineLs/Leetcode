@@ -1,0 +1,68 @@
+// ref: https://leetcode.cn/problems/fizz-buzz-multithreaded/solutions/865913/javasi-chong-bu-tong-fang-fa-shi-xian-by-2qgc/
+class FizzBuzz {
+    private int n;
+    private int i = 1;
+    public FizzBuzz(int n) {
+        this.n = n;
+    }
+
+    // printFizz.run() outputs "fizz".
+    public void fizz(Runnable printFizz) throws InterruptedException {
+        synchronized (this) {
+            while (i <= n) {
+                if (i % 3 == 0 && i % 5 != 0) {
+                    printFizz.run();
+                    i++;
+                    this.notifyAll();
+                } else {
+                    this.wait();
+                }
+            }
+        }
+    }
+
+    // printBuzz.run() outputs "buzz".
+    public void buzz(Runnable printBuzz) throws InterruptedException {
+        synchronized (this) {
+            while (i <= n) {
+                if (i % 5 == 0 && i % 3 != 0) {
+                    printBuzz.run();
+                    i++;
+                    this.notifyAll();
+                } else {
+                    this.wait();
+                }
+            }
+        }
+    }
+
+    // printFizzBuzz.run() outputs "fizzbuzz".
+    public void fizzbuzz(Runnable printFizzBuzz) throws InterruptedException {
+        synchronized (this) {
+            while (i <= n) {
+                if (i % 3 == 0 && i % 5 == 0) {
+                    printFizzBuzz.run();
+                    i++;
+                    this.notifyAll();
+                } else {
+                    this.wait();
+                }
+            }
+        }
+    }
+
+    // printNumber.accept(x) outputs "x", where x is an integer.
+    public void number(IntConsumer printNumber) throws InterruptedException {
+        synchronized (this) {
+            while (i <= n) {
+                if (i % 3 != 0 && i % 5 != 0) {
+                    printNumber.accept(i);
+                    i++;
+                    this.notifyAll();
+                } else {
+                    this.wait();
+                }
+            }
+        }
+    }
+}
