@@ -1,0 +1,61 @@
+Solution1: 不保证正确
+class DiningPhilosophers {
+
+    public DiningPhilosophers() {
+        
+    }
+
+    // call the run() method of any runnable to execute its code
+    public void wantsToEat(int philosopher,
+                           Runnable pickLeftFork,
+                           Runnable pickRightFork,
+                           Runnable eat,
+                           Runnable putLeftFork,
+                           Runnable putRightFork) throws InterruptedException {
+        synchronized (this) {
+            pickLeftFork.run();
+            pickRightFork.run();
+            eat.run();
+            putLeftFork.run();
+            putRightFork.run();
+        }
+    }
+}
+
+Solution2: Lawrence Bei 同学提供
+
+class DiningPhilosophers {
+    private boolean[] forkoccupied = new boolean[5];
+    private final Object lock = new Object();
+    public DiningPhilosophers() {
+        
+    }
+
+    // call the run() method of any runnable to execute its code
+    public void wantsToEat(int philosopher,
+                           Runnable pickLeftFork,
+                           Runnable pickRightFork,
+                           Runnable eat,
+                           Runnable putLeftFork,
+                           Runnable putRightFork) throws InterruptedException {
+        synchronized (lock) {
+            while (forkoccupied[philosopher] || forkoccupied[(philosopher + 1) % 5]) {
+                lock.wait();
+            }
+            forkoccupied[philosopher] = true;
+            forkoccupied[(philosopher + 1) % 5] = true;
+            pickLeftFork.run();
+            pickRightFork.run();
+        }
+
+        eat.run();
+
+        synchronized (lock) {
+            forkoccupied[philosopher] = false;
+            forkoccupied[(philosopher + 1) % 5] = false;
+            putLeftFork.run();
+            putRightFork.run();
+            lock.notifyAll();
+        }
+    }
+}
