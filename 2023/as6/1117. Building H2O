@@ -1,0 +1,33 @@
+// ref: https://leetcode.cn/problems/building-h2o/solutions/898366/chang-you-duo-xian-cheng-zhi-h2osheng-ch-8f7g/
+class H2O {
+    private volatile int state = 0;
+    private Object obj = new Object();
+    public H2O() {
+        
+    }
+
+    public void hydrogen(Runnable releaseHydrogen) throws InterruptedException {
+		synchronized (obj) {
+            while (state == 2) {
+                obj.wait();
+            }
+            state++;
+            // releaseHydrogen.run() outputs "H". Do not change or remove this line.
+            releaseHydrogen.run();
+            obj.notifyAll();
+        }
+    }
+
+    public void oxygen(Runnable releaseOxygen) throws InterruptedException {
+        synchronized (obj) {
+            while (state != 2) {
+                obj.wait();
+            }
+            state = 0;
+            // releaseOxygen.run() outputs "O". Do not change or remove this line.
+		    releaseOxygen.run();
+            obj.notifyAll();
+        }
+
+    }
+}
