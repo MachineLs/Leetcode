@@ -1,0 +1,33 @@
+ref:插件
+Solution: use prefixSum
+class NumArray {
+    int[] prefix;
+    public NumArray(int[] nums) {
+        int[] prefix = new int[nums.length + 1];
+        for (int i = 1; i < prefix.length; i++) {
+            prefix[i] = prefix[i-1] + nums[i - 1];
+        }
+        this.prefix = prefix;
+    }
+    
+    public int sumRange(int left, int right) {
+        return prefix[right + 1] - prefix[left];
+    }
+}
+
+Solution: bf
+
+class NumArray {
+    int[] nums;
+    public NumArray(int[] nums) {
+        this.nums = nums;
+    }
+    
+    public int sumRange(int left, int right) {
+        int sum = 0;
+        for (int i = left; i <= right; i++) {
+            sum += nums[i];
+        }
+        return sum;
+    }
+}
