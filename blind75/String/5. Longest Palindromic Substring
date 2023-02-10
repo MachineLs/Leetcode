@@ -1,5 +1,3 @@
-视频解释 https://leetcode.cn/problems/longest-palindromic-substring/solution/zui-chang-hui-wen-zi-chuan-by-leetcode-solution/
-
 Best Solution: ref https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-48c1d/shuang-zhi-fa4bd/
 class Solution {
     public String longestPalindrome(String s) {
@@ -58,6 +56,7 @@ class Solution {
     }
 }
 
+视频解释 https://leetcode.cn/problems/longest-palindromic-substring/solution/zui-chang-hui-wen-zi-chuan-by-leetcode-solution/
 Solution2: dp中心扩散 O(n^2) and O(n^2)...         运行速度比上面方法都慢
 class Solution {
     public String longestPalindrome(String s) {
