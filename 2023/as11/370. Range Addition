@@ -3,6 +3,10 @@ ref: https://baihuqian.github.io/2018-08-16-range-addition/ and https://www.jiak
 Step1: 似乎是先从update里取第一位 往res里 附上最后一位的值, 并且在最后一位+1的位置 减去这个对应update值, 重复这个过程
 step2: res[i] = res[i-1] + res[i]
 算法貌似叫lazy propagation
+
+扫描线法
+start 那里+， end + 1那里减， 然后前缀和一遍就完事
+
 class Solution {
     public int[] getModifiedArray(int length, int[][] updates) {
         int[] res = new int[length];
