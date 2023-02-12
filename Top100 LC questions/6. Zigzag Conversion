@@ -1,0 +1,26 @@
+// ref https://www.jiakaobo.com/leetcode/6.%20Zigzag%20Conversion.html
+//如果忘了直接看视频,很简单
+class Solution {
+    public String convert(String s, int numRows) {
+        StringBuilder[] sbs = new StringBuilder[numRows];
+        for (int i = 0; i < numRows; i++) {
+            sbs[i] = new StringBuilder();
+        }
+        int i = 0;
+        while (i < s.length()) {
+            int curRow = 0;
+            while (i < s.length() && curRow < numRows) {
+                sbs[curRow++].append(s.charAt(i++));
+            }
+            curRow -= 2; //因为换行,首先上行curRow++多出一个,然后又得不能在底层,所以一共是-2
+            while (curRow > 0 && i < s.length()) {
+                sbs[curRow--].append(s.charAt(i++));
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int j = 0; j < numRows; j++) {
+            sb.append(sbs[j]);
+        }
+        return sb.toString();
+    }
+}
