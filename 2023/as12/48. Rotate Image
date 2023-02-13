@@ -1,0 +1,30 @@
+//先按照对角线反转, 然后在把每一行内反转 比如第一行 1 4 7 -> 7 4 1
+//ref https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-48c1d/er-wei-shu-150fb/
+class Solution {
+    public void rotate(int[][] matrix) {
+        //对角线反转
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = i; j < matrix[0].length; j++) { //注意这里是j = i, 如果j = 0, 重复操作后和之前矩阵一样
+                int tmp = matrix[i][j]; 
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = tmp;
+            }
+        }
+
+        // 行内反转
+        for (int[] array : matrix) {
+            reverse(array);
+        }
+    }
+
+    void reverse(int[] array) {
+        for (int i = 0; i < array.length / 2; i++) {
+            int tmp = array[i];
+            array[i] = array[array.length - i - 1];
+            array[array.length - i - 1] = tmp;
+        }
+    }
+}
+//321
+//654
+//987
