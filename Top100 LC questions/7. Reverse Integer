@@ -1,0 +1,14 @@
+// ref https://www.jiakaobo.com/leetcode/7.%20Reverse%20Integer.html
+class Solution {
+    public int reverse(int x) {
+        int res = 0;
+        while (x != 0) {
+            int tail = x % 10;
+            int tmp = res * 10 + tail;
+            if (tmp / 10 != res) return 0; // tmp/10 = res + tail/10 (tail/10 必定为0) 简化为 -> tmp / 10 不等于 res 说明越界
+            res = tmp;
+            x = x / 10;
+        }
+        return res;
+    }
+}
