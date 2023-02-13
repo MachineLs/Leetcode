@@ -1,4 +1,34 @@
-as7:
+as1: 
+1	two sum
+54	Spiral matrix
+66	plus one
+6	zigzag
+75	sort colors
+
+as2:
+88	merge sorted array
+118	Pascal's triangle
+704	binary search
+35	search insertion position
+69	Sqrt(x)
+
+as3:
+278	first bad version
+74	Search a 2D matrix
+
+as4:
+217	contains duplicate
+252	meeting rooms
+203	remove linkedlist elements
+160	intersection of linkedlist
+206	reverse linkedlist
+
+as5:
+21	merge two sorted list
+83	remove duplicates from sorted list
+23	merge k sorted list
+
+as6:
 595. Big Countries
 1757. Recyclable and Low Fat Products
 584. Find Customer Referee
@@ -6,6 +36,13 @@ as7:
 175. Combine Two Tables	
 176. Second Highest Salary
 
+as7:
+595. Big Countries
+1757. Recyclable and Low Fat Products
+584. Find Customer Referee
+183. Customers Who Never Order
+175. Combine Two Tables	
+176. Second Highest Salary
 
 as8: 177, 181, 196, 180, 184, 596
 
