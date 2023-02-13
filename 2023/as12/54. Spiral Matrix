@@ -1,0 +1,43 @@
+// ref https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-48c1d/er-wei-shu-150fb/
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        int m = matrix.length, n = matrix[0].length;
+        int up_bound = 0, low_bound = m - 1;
+        int left_bound = 0, right_bound = n - 1;
+        List<Integer> res = new ArrayList<>();
+
+        while (res.size() < m * n) {
+            if (up_bound <= low_bound) {
+                //在顶部 从左->右
+                for (int j = left_bound; j <= right_bound; j++) {
+                    res.add(matrix[up_bound][j]);
+                }
+                up_bound++;
+
+            if (left_bound <= right_bound)
+                //在右侧 从上->下
+                for (int i = up_bound; i <= low_bound; i++) {
+                    res.add(matrix[i][right_bound]);
+                }
+                right_bound--;
+            }
+
+            if (up_bound <= low_bound) {
+                //在下侧 从右->左
+                for (int j = right_bound; j >= left_bound; j--) {
+                    res.add(matrix[low_bound][j]);
+                }
+                low_bound--;
+            }
+
+            if (left_bound <= right_bound) {
+                //在左侧 从下->上
+                for (int i = low_bound; i >= up_bound; i--) {
+                    res.add(matrix[i][left_bound]);
+                }
+                left_bound++;
+            }
+        }
+        return res;
+    }
+}
