@@ -1,0 +1,40 @@
+// ref https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-48c1d/er-wei-shu-150fb/
+class Solution {
+    public int[][] generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+        int upBound = 0, lowBound = n - 1;
+        int leftBound = 0, rightBound = n - 1;
+        int nums = 1;
+        while (nums <= n * n) {
+            //在顶部 从左->右
+            if (upBound <= lowBound) {
+                for (int j = leftBound; j <= rightBound; j++) {
+                    matrix[upBound][j] = nums++;
+                }
+                upBound++;
+            }
+            //在右侧 从上->下
+            if (leftBound <= rightBound) {
+                for (int i = upBound; i <= lowBound; i++) {
+                    matrix[i][rightBound] = nums++;
+                }
+                rightBound--;
+            }
+            //在底部 从右->左
+            if (upBound <= lowBound) {
+                for (int j = rightBound; j >= leftBound; j--) {
+                    matrix[lowBound][j] = nums++;
+                }
+                lowBound--;
+            }
+            //在左侧 从下->上
+            if (leftBound <= rightBound) {
+                for (int i = lowBound; i >= upBound; i--) {
+                    matrix[i][leftBound] = nums++;
+                }
+                leftBound++;
+            }
+        }
+        return matrix;
+    }
+}
