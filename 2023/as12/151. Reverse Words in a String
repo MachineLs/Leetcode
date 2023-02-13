@@ -1,0 +1,51 @@
+ref: labuladong 题解
+class Solution {
+    public String reverseWords(String s) {
+        StringBuilder sb = new StringBuilder();
+        //清洗数据
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c != ' ') {
+                sb.append(c);
+                
+            } else if (!sb.isEmpty() && sb.charAt(sb.length() - 1) != ' ') {  //sb的头和尾都不为' '
+                sb.append(' ');
+            }
+        }
+
+        System.out.println(sb.toString());
+        
+        // // 有的case末尾有多于等于1个空格,去除空格后,末尾还会多一个空格, 此时需要清除这个空格
+        if (sb.charAt(sb.length() - 1) == ' ') {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
+        char[] chars = sb.toString().toCharArray();
+        int n = chars.length;
+        //整体反转
+        reverse(chars, 0, n-1);
+        //对每个单词反转
+        for (int i = 0; i < n;) {
+            for (int j = i; j < n; j++) {
+                if (j + 1 == n || chars[j + 1] == ' ') {
+                    //chars[i...j]为单词
+                    reverse(chars, i, j);
+                    //更新i
+                    i = j + 2; //因为中间有个空格 the sky -> e是2 s是4 ,正好差2
+                    break;
+                }
+            }
+        }
+        return new String(chars);
+    }
+
+    void reverse(char[] array, int i, int j) {
+        while (i <= j) {
+            char tmp = array[i];
+            array[i] = array[j];
+            array[j] = tmp;
+            i++;
+            j--;
+        }
+    }
+}
