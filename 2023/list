@@ -19,4 +19,12 @@ as11:
 5. Longest Palindromic Substring	
 303. Range Sum Query - Immutable	
 304. Range Sum Query 2D - Immutable	
-370. Range Addition  (lintcode 903 · 范围加法)
+370. Range Addition  (lintcode 903 · 范围加法) 差分数组
+
+as12:
+1094. Car Pooling 差分数组
+1109. Corporate Flight Bookings 差分数组
+48. Rotate Image
+54. Spiral Matrix
+59. Spiral Matrix II
+151. Reverse Words in a String
