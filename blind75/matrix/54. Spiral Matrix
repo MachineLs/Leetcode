@@ -1,78 +1,43 @@
-//https://www.youtube.com/watch?v=mmQfavfpW_M&ab_channel=%E8%B4%BE%E8%80%83%E5%8D%9A
-//O(m*n) O(1)
-left - down - right -up  按照旋转顺序遍历矩阵, 并且更新初始和终止条件
-
+// ref https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-48c1d/er-wei-shu-150fb/
+// 推荐
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
+        int m = matrix.length, n = matrix[0].length;
+        int up_bound = 0, low_bound = m - 1;
+        int left_bound = 0, right_bound = n - 1;
         List<Integer> res = new ArrayList<>();
-        int rowBegin = 0;
-        int rowEnd = matrix.length - 1;
-        int colBegin = 0;
-        int colEnd = matrix[0].length - 1;
-        
-        while (rowBegin <= rowEnd && colBegin <= colEnd) {
-            //traverse right
-            for (int j = colBegin; j <= colEnd; j++) {
-                res.add(matrix[rowBegin][j]);
-            }
-            rowBegin++;
-            //traverse down
-            for (int j = rowBegin; j <= rowEnd; j++) {
-                res.add(matrix[j][colEnd]);
-            }
-            colEnd--;
-            //因为可能不是方阵
-            //必须要有row或者col我们才遍历
-            if (rowBegin <= rowEnd) {
-                //traverse left
-                for (int j = colEnd; j >= colBegin; j--) {
-                    res.add(matrix[rowEnd][j]);
-                }
-            }
-            rowEnd--;
-            
-            if (colBegin <= colEnd) {
-                for (int j = rowEnd; j >= rowBegin; j--) {
-                    res.add(matrix[j][colBegin]);
-                }
-            }
-            colBegin++;
-        }
-        return res;
-    }
-}
 
-class Solution {
-    public List<Integer> spiralOrder(int[][] matrix) {
-        List<Integer> res = new ArrayList<>();
-        int rowBegin = 0, rowEnd = matrix.length - 1, colBegin = 0, colEnd = matrix[0].length - 1;
-        while (rowBegin <= rowEnd && colBegin <= colEnd) {
-            //right
-            for (int i = colBegin; i <= colEnd; i++) { //我错在i的起始和终止条件begin end, 而且有个技巧,在纸上画例子,遍历过的就用笔划掉
-                res.add(matrix[rowBegin][i]);
-            }
-            rowBegin++;
-            //down
-            for (int i = rowBegin; i <= rowEnd; i++) {
-                res.add(matrix[i][colEnd]);
-            }
-            colEnd--;
-            //left
-            if (rowBegin <= rowEnd) {
-                for (int i = colEnd; i >= colBegin; i--) {
-                res.add(matrix[rowEnd][i]);
+        while (res.size() < m * n) {
+            if (up_bound <= low_bound) {
+                //在顶部 从左->右
+                for (int j = left_bound; j <= right_bound; j++) {
+                    res.add(matrix[up_bound][j]);
                 }
+                up_bound++;
+
+            if (left_bound <= right_bound)
+                //在右侧 从上->下
+                for (int i = up_bound; i <= low_bound; i++) {
+                    res.add(matrix[i][right_bound]);
+                }
+                right_bound--;
             }
 
-            rowEnd--;
-            //up
-            if (colBegin <= colEnd) {
-                for (int i = rowEnd; i >= rowBegin; i--) {
-                res.add(matrix[i][colBegin]);
+            if (up_bound <= low_bound) {
+                //在下侧 从右->左
+                for (int j = right_bound; j >= left_bound; j--) {
+                    res.add(matrix[low_bound][j]);
                 }
+                low_bound--;
             }
 
-            colBegin++;
+            if (left_bound <= right_bound) {
+                //在左侧 从下->上
+                for (int i = low_bound; i >= up_bound; i--) {
+                    res.add(matrix[i][left_bound]);
+                }
+                left_bound++;
+            }
         }
         return res;
     }
