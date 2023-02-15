@@ -1,0 +1,52 @@
+//sliding window, right往前走直到找到合适的substring位置(找解), left往前走(优化这个解), 重复right和left的过程, 直到right走完最后一个字符;
+//ref 是c++代码, 已经转换成java https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-48c1d/wo-xie-le--f7a92/
+class Solution {
+    public String minWindow(String s, String t) {
+        HashMap<Character, Integer> need = new HashMap<>();
+        HashMap<Character, Integer> window = new HashMap<>();
+        //把所有t的字符扫到map need里
+        char[] t1 = t.toCharArray();
+        for (char c : t1) {
+            need.put(c, need.getOrDefault(c, 0) + 1);
+        }
+        int left = 0, right = 0;
+        //valid是记录所有need有效字符的, 例子 abbd -> 3, abc -> 3 
+        int valid = 0;
+        //记录最小覆盖字串的起始索引start和长度len
+        int start = 0, len = Integer.MAX_VALUE;
+        while (right < s.length()) {
+            //c是right当前进入窗口的字符
+            char c = s.charAt(right);
+            right++;
+            //如果在need里, 就把他加到window里,并且计数
+            if (need.containsKey(c)) {
+                window.put(c, window.getOrDefault(c, 0) + 1);
+                //如果window里的和need里的数量相同, valid++
+                if (window.get(c).equals(need.get(c))) {
+                    valid++;
+                }
+            }
+            //如果valid和need的size相等, 说明有一个解, 可以优化left, 让left++
+            while (valid == need.size()) {
+                // 在这里更新最小覆盖子串, 记录start(字串的初始位置), len是字串的长度
+                if (right - left < len) {
+                    start = left;
+                    len = right - left;
+                }
+                // d 是将移出窗口的字符
+                char d = s.charAt(left);
+                //缩小窗口
+                left++;
+                //更新窗口数据, 如果是need里的元素, 更新valid值, 更新window里d的值
+                if (need.containsKey(d)) {
+                    if (window.get(d).equals(need.get(d))) {
+                        valid--;
+                    }
+                    window.put(d, window.get(d) - 1);
+                }
+            }
+        }
+        //返回最小覆盖子串
+        return len == Integer.MAX_VALUE ? "" : s.substring(start, start + len);
+    }
+}
