@@ -1,0 +1,15 @@
+StringBuilder sb
+
+sb.append(i)
+sb.charAt(i)
+sb.reverse()
+sb.toString()
+
+
+String s
+s.substring(beginIndex, endIndex)  -> [begin, end)
+
+HashMap map
+map.size()
+map.getOrDefault(c, 0) + 1
+map.containsKey()
