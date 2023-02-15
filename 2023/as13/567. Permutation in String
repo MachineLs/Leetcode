@@ -1,0 +1,41 @@
+//ref: C++ -> Java https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-48c1d/wo-xie-le--f7a92/
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        HashMap<Character, Integer> need = new HashMap<>();
+        HashMap<Character, Integer> window = new HashMap<>();
+        char[] t = s1.toCharArray();
+        for (char c : t) {
+            need.put(c, need.getOrDefault(c, 0) + 1);
+        }
+        int left = 0, right = 0;
+        int valid = 0;
+        while (right < s2.length()) {
+            //right
+            char c = s2.charAt(right);
+            right++;
+            if (need.containsKey(c)) {
+                window.put(c, window.getOrDefault(c, 0) + 1);
+                if (window.get(c).equals(need.get(c))) { //这里为了重复的情况用的,只要两个map的size相等即可减 eg. abc, dcda -> need.size = 3 windows.size = 3, 只要还有1个d, 就可以减
+                    valid++;
+                }
+            }
+
+            //left是否要收缩
+            //只有当当前窗口长度大于s1的时候,才值得判断, 否则肯定是false啊
+            while (right - left >= s1.length()) {
+                if (valid == need.size()) {
+                    return true;
+                }
+                char l = s2.charAt(left);
+                left++;
+                if (need.containsKey(l)) {
+                    if (window.get(l).equals(need.get(l))) { //这里为了重复的情况用的 eg. abc, dcda -> need.size = 3 windows.size = 3, 只要还有1个d, 就可以减
+                        valid--;
+                        window.put(l, window.getOrDefault(l, 0) - 1);
+                    }
+                }
+            }
+        }
+        return false;
+    }
+}
