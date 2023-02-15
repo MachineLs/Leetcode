@@ -31,8 +31,8 @@ class Solution {
                 if (need.containsKey(l)) {
                     if (window.get(l).equals(need.get(l))) { //这里为了重复的情况用的 eg. abc, dcda -> need.size = 3 windows.size = 3, 只要还有1个d, 就可以减
                         valid--;
-                        window.put(l, window.getOrDefault(l, 0) - 1);
                     }
+                    window.put(l, window.getOrDefault(l, 0) - 1);//这里不可放在上面if{}里面, 因为上面是查重, 而这l无论如何都得-1;
                 }
             }
         }
