@@ -8,7 +8,9 @@ class Solution {
         for (char a : p1) {
             need.put(a, need.getOrDefault(a, 0) + 1);
         }
+        //开始滑动窗口
         while (right < s.length()) {
+            //更新右指针
             char c = s.charAt(right);
             right++;
             //窗口数据更新
@@ -18,22 +20,26 @@ class Solution {
                     valid++;
                 }
             }
-        }
-        
-        while (right - left >= p.length()) {
-            if (valid == need.size()) {
-                res.add(left);
-            }
-            char l = s.charAt(left);
-            left++;
-            //窗口数据更新
-            if (need.containsKey(l)) {
-                if (window.get(l).equals(need.get(l))) {
-                    valid--;
+
+            //检测满足的解, 并且更新左指针
+            //注意while得在上一个while作用域下面, 第一个while循环同时做了两件事更新right, 更新left
+            while (right - left == p.length()) {//记得这里是p.length(), 我错在need.size();
+
+                if (valid == need.size()) {
+                    res.add(left);
                 }
-                window.put(l, window.getOrDefault(l, 0) - 1);
+                char l = s.charAt(left);
+                left++;
+                //窗口数据更新
+                if (need.containsKey(l)) {
+                    if (window.get(l).equals(need.get(l))) {
+                        valid--;
+                    }
+                    window.put(l, window.getOrDefault(l, 0) - 1);
+                }
             }
         }
+    
         return res;
     }
 }
