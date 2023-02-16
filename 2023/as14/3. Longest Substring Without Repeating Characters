@@ -1,3 +1,4 @@
+solution1: 插件模板
 class Solution {
     public int lengthOfLongestSubstring(String s) {
         HashMap<Character, Integer> window = new HashMap<>();
@@ -11,6 +12,27 @@ class Solution {
                 char t = s.charAt(left);
                 left++;
                 window.put(t, window.getOrDefault(t, 0) - 1);
+            }
+            res = Math.max(res, right - left);
+        }
+        return res;
+    }
+}
+
+solution2: set法
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        //始终维护一个不重复的set, 如果right前头遇到重复的,left就++缩小范围, res会记录最大值
+        HashSet<Character> set = new HashSet<>();
+        int left = 0, right = 0, res = 0;
+        while (right < s.length()) {
+            char c = s.charAt(right);
+            if (!set.contains(c)) {
+                set.add(c);
+                right++;
+            } else {
+                set.remove(s.charAt(left));
+                left++;
             }
             res = Math.max(res, right - left);
         }
