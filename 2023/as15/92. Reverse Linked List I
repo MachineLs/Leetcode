@@ -1,0 +1,22 @@
+ //ref https://www.jiakaobo.com/leetcode/92.%20Reverse%20Linked%20List%20II.html
+//  Input: head = [1,2,3,4,5], left = 2, right = 4
+// Output: [1,4,3,2,5]
+ // prev = 1, curr = 2, next = 3, next.next = 4 -> curr.next = 4, next.next = 2, prev.next = 3
+class Solution {
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode prev = dummy;
+        for (int i = 1; i < left; i++) {
+            prev = prev.next;
+        }
+        ListNode curr = prev.next;
+        for (int i = m; i < n; i++) {
+            ListNode next = curr.next;
+            curr.next = next.next;
+            next.next = prev.next;
+            prev.next = next;
+        }
+        return dummy.next;
+    }
+}
