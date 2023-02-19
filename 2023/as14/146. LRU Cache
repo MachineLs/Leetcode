@@ -1,0 +1,26 @@
+ref: https://www.jiakaobo.com/leetcode/146.%20LRU%20Cache.html
+what is removeEldestEntry: https://www.geeksforgeeks.org/linkedhashmap-removeeldestentry-method-in-java/
+what is LinkedHashMap: https://www.geeksforgeeks.org/linkedhashmap-class-in-java/
+
+class LRUCache {
+
+    private LinkedHashMap<Integer, Integer> map;
+    private final int CAPACITY;
+
+    public LRUCache(int capacity) {
+        CAPACITY = capacity;
+        map = new LinkedHashMap<Integer, Integer>(CAPACITY, 0.75f, true){ //在这里，对于第三个Order 属性，为最后访问顺序传递 true，为插入顺序传递 false。
+            protected boolean removeEldestEntry(Map.Entry eldest) {
+                return size() > CAPACITY;
+            }
+        };
+    }
+
+    public int get(int key) {
+        return map.getOrDefault(key, -1);
+    }
+
+    public void put(int key, int value) {
+        map.put(key, value);
+    }
+}
