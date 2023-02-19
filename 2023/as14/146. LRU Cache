@@ -3,23 +3,21 @@ what is removeEldestEntry: https://www.geeksforgeeks.org/linkedhashmap-removeeld
 what is LinkedHashMap: https://www.geeksforgeeks.org/linkedhashmap-class-in-java/
 
 class LRUCache {
-
     private LinkedHashMap<Integer, Integer> map;
-    private final int CAPACITY;
-
+    private final int c;
     public LRUCache(int capacity) {
-        CAPACITY = capacity;
-        map = new LinkedHashMap<Integer, Integer>(CAPACITY, 0.75f, true){ //在这里，对于第三个Order 属性，为最后访问顺序传递 true，为插入顺序传递 false。
-            protected boolean removeEldestEntry(Map.Entry eldest) {
-                return size() > CAPACITY;
+        c = capacity; //用c接住capacity的值
+        map = new LinkedHashMap<>(c, 0.75f, true) {
+            protected boolean removeEldestEntry(Map.Entry eldest) { //在这里，对于第三个Order 属性，为最后访问顺序传递 true，为插入顺序传递 false。
+                return size() > c; //The map returns true if the eldest entry is to be removed from the map and false if the entry is not to be removed or retained.
             }
         };
     }
-
+    
     public int get(int key) {
         return map.getOrDefault(key, -1);
     }
-
+    
     public void put(int key, int value) {
         map.put(key, value);
     }
