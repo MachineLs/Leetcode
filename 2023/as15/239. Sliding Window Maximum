@@ -1,5 +1,5 @@
 // ref: https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-daeca/dan-diao-d-32cd5/
-//使用单调队列, 左侧队头,右侧队尾, 让单调队列的左侧队头始终是max值, 右侧是最小值,
+//使用单调队列, 左侧队头,右侧队尾, 让单调队列的左侧队头始终是max值, 右侧是最小值且最近进来的值(因为不符合条件的值都被删掉了)
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
         MonotonicQueue window = new MonotonicQueue();
