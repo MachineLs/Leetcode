@@ -34,7 +34,7 @@ class Solution {
         }
 
         public void pop(int n) {
-            if (n == maxq.getFirst()) { //这里需要判断因为, 可能压扁后n已经是最小的了,所以这时候就不用删除了
+            if (n == maxq.getFirst()) { //这里需要判断因为, 压扁的过程已经在删除值了, 那么有可能压扁后n已经是最小的了,所以这时候就不用删除了
                 maxq.pollFirst();
             }
         }
