@@ -1,0 +1,25 @@
+104. Maximum Depth of Binary Tree
+ref 插件
+class Solution {
+    //最大深度
+    int max = 0;
+    //每个节点实时深度 
+    int depth = 0;
+    public int maxDepth(TreeNode root) {
+        traverse(root);
+        return max;
+    }
+
+    void traverse(TreeNode root) {
+        if (root == null) return;
+        //前序
+        depth++;
+        //到达叶子
+        if (root.left == null && root.right == null) {
+            max = Math.max(max, depth);
+        }
+        traverse(root.left);
+        traverse(root.right);
+        depth--;
+    }
+}
