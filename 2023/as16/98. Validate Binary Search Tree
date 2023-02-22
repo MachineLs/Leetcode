@@ -1,0 +1,17 @@
+ //自上而下的检查方法, 同时输入min和max两个node, 要求值满足max.val > root.val > min.val 如果值不满足返回false, 分别向左和右子树检查
+ //ref https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-66994/dong-ge-da-7b3e4/
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return helper(root, null, null);
+    }
+
+    boolean helper(TreeNode root, TreeNode min, TreeNode max) {
+        //base case
+        if (root == null) return true;
+        //判断值
+        if (min != null && root.val <= min.val) return false;
+        if (max != null && root.val >= max.val) return false;
+        //放别向左右子树查找, 并且更新最值
+        return helper(root.left, min, root) && helper(root.right, root, max);
+    }
+}
