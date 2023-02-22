@@ -1,0 +1,12 @@
+ //使用BST模板, 注意主要构造root.right和root.left
+ //ref插件
+class Solution {
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        //找到空位置查询新节点
+        if (root == null) return new TreeNode(val);
+        //if(root.val == val) BST不插入元素
+        if (root.val < val) root.right = insertIntoBST(root.right, val);
+        if (root.val > val) root.left = insertIntoBST(root.left, val);
+        return root;
+    }
+}
