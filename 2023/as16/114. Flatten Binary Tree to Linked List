@@ -1,4 +1,5 @@
- //先把左右子树拉平, 然后记录下当前节点左右子树, 把左子树放到右子树上, 然后左子树为空, 找到右子树最右的节点, 然后连上原来的右子树 
+ //Solution: 先把左右子树拉平, 然后记录下当前节点左右子树, 把左子树放到右子树上, 然后左子树为空, 找到右子树最右的节点, 然后连上原来的右子树 
+ //ref: https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-66994/dong-ge-da-7b3e4/
 class Solution {
     public void flatten(TreeNode root) {
         //base case
@@ -10,11 +11,11 @@ class Solution {
         TreeNode left = root.left;
         TreeNode right = root.right;
         //把root的左子树放到root的右子树上(插件里的注释和图有问题)
+        root.right = left;
         //把左子树置为null
         root.left = null;
-        root.right = left;
         //找到右子树最后一个节点, 然后把做右子树接上
-        TreeNode p = root;
+        TreeNode p = root; /*注意这里是root(我错在right)*/
         while (p.right != null) {
             p = p.right;
         }
