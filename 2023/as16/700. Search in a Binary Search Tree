@@ -1,0 +1,15 @@
+ref插件
+class Solution {
+    public TreeNode searchBST(TreeNode root, int val) {
+        if (root == null) return null;
+        if (root.val > val) {
+            //这里必须得有 return 因为如果没有return, 最后root值还是最最初的root(可以找到,但是返回的root不对)
+            //弹栈的时候, 不更新root值, 致使最后一个栈里的root还是最初的值
+            return searchBST(root.left, val); 
+        }
+        if (root.val < val) {
+            return searchBST(root.right, val);
+        }
+        return root;
+    }
+}
