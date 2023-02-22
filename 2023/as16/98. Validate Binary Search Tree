@@ -12,6 +12,7 @@ class Solution {
         if (min != null && root.val <= min.val) return false;
         if (max != null && root.val >= max.val) return false;
         //放别向左右子树查找, 并且更新最值
+        /*我错在 helper(root, min, root.left) && helper(root, root.right, max); */ 
         return helper(root.left, min, root) && helper(root.right, root, max);
     }
 }
