@@ -1,0 +1,24 @@
+ //先把左右子树拉平, 然后记录下当前节点左右子树, 把左子树放到右子树上, 然后左子树为空, 找到右子树最右的节点, 然后连上原来的右子树 
+class Solution {
+    public void flatten(TreeNode root) {
+        //base case
+        if (root == null) return;
+        //利用定义把左右子树拉平
+        flatten(root.left);
+        flatten(root.right);
+        //保存左右子树
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        //把root的左子树放到root的右子树上(插件里的注释和图有问题)
+        //把左子树置为null
+        root.left = null;
+        root.right = left;
+        //找到右子树最后一个节点, 然后把做右子树接上
+        TreeNode p = root;
+        while (p.right != null) {
+            p = p.right;
+        }
+        //然后把做右子树接上
+        p.right = right;
+    }
+}
