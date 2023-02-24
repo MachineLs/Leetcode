@@ -1,0 +1,57 @@
+//ref: https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-03a72/huan-jian--e36de/
+//这是dfs solution(bfs solution需要计算出度入度)
+class Solution {
+    //记录一次递归堆栈中的节点
+    boolean[] onPath;
+    //记录遍历过的节点,防止回头路
+    boolean[] visited;
+    //记录图中是否有环
+    boolean hasCycle = false;
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        List<Integer>[] graph = buildGraph(numCourses, prerequisites);
+        visited = new boolean[numCourses];
+        onPath = new boolean[numCourses];
+        //遍历图中所有节点(防止一些单独的节点存在)
+        for (int i = 0; i < numCourses; i++) {
+            traverse(graph, i);
+        }
+        //有环和完成课程是相反的, 所以是!hasCycle
+        return !hasCycle; 
+    }
+
+    void traverse(List<Integer>[] graph, int s) {
+        //如果遇到访问过的节点
+        if (onPath[s]) {
+            //则出现环
+            hasCycle = true;
+        }
+        if (visited[s] || hasCycle) {
+            //如果base case或者遇到环则不用继续访问
+            return;
+        }
+        //前序代码
+        visited[s] = true;
+        onPath[s] = true;
+        for (int t : graph[s]) {
+            traverse(graph, t);
+        }
+        //后序代码
+        onPath[s] = false;
+    }
+
+    List<Integer>[] buildGraph(int numCourses, int[][] prerequisites) {
+        //numCourses个节点,构建这个图
+        List<Integer>[] graph = new LinkedList[numCourses];
+        /*这里是i < numCourses, 我错在prerequisites.length(看例1,这样写并不是图节点的个数)*/ 
+        for (int i = 0; i < numCourses; i++) { //
+            graph[i] = new LinkedList<>();
+        }
+
+        for (int[] edge : prerequisites) {
+            int from = edge[1], to = edge[0];
+            //先学了from 在学to, 所以添加一条从from到to的有向边
+            graph[from].add(to);
+        }
+        return graph;
+    }
+}
