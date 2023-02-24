@@ -1,0 +1,31 @@
+ref: https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-03a72/tu-lun-ji--d55b2/
+class Solution {
+    //起始就是dfs+回溯
+    //res记录所有路径, 
+    List<List<Integer>> res = new LinkedList<>();
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        LinkedList<Integer> path = new LinkedList<>();
+        traverse(graph, 0, path);
+        return res;
+    }
+
+    void traverse(int[][] graph, int s, LinkedList<Integer> path) {
+        //添加节点s到path
+        path.addLast(s);
+
+        int n = graph.length;
+        //因为是DAG, 所以不会有环
+        //终止条件就是s等于grapth, v的最后一个时候
+        if (s == n - 1) {
+            //遍历完了
+            res.add(new LinkedList<>(path));
+            //
+        }
+
+        for (int v : graph[s]) {
+            traverse(graph, v, path);
+        }
+        //吐
+        path.removeLast();
+    }
+}
