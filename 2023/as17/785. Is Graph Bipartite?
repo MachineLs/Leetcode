@@ -1,0 +1,45 @@
+// ref: https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-03a72/er-fen-tu--73400/
+class Solution {
+    //记录图是否符合二分图性质
+    private boolean ok = true;
+    //记录节点颜色
+    private boolean[] color;
+    //记录节点是否访问
+    private boolean[] visited;
+
+    public boolean isBipartite(int[][] graph) {
+        int n = graph.length;
+        color = new boolean[n];
+        visited = new boolean[n];
+        //图不一定连通, 所以每个子图都需要重新访问, 一旦发现子图不是bipartite,返回false
+        for (int v = 0; v < n; v++) {
+            if (!visited[v]) {
+                traverse(graph, v);
+            }
+        }
+        return ok;    
+    }
+
+    void traverse(int[][] graph, int v) {
+        //如果不是二分图直接跳出
+        if (!ok) return;
+
+        visited[v] = true;
+        for (int w : graph[v]) {
+            if (!visited[w]) {
+                //如果v的相邻节点w没被访问过
+                //则给w染和v相反的色
+                color[w] = !color[v];
+                //继续遍历w
+                traverse(graph, w);
+            } else {
+                //v已经访问过了
+                //根据w和v判断是否是bipartite
+                if (color[v] == color[w]) {
+                    ok = false;
+                    return;
+                }
+            }
+        }
+    }
+}
