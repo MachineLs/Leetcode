@@ -1,4 +1,5 @@
 ref: https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-03a72/tu-lun-ji--d55b2/
+LinkedList有removeLast, ArrayList没有, 虽然可以用size() - 1, 但是麻烦,所以还是建议linkedlist
 class Solution {
     //起始就是dfs+回溯
     //res记录所有路径, 
