@@ -1,4 +1,7 @@
 //ref https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-03a72/bing-cha-j-323f3/
+// 主要思路是适时增加虚拟节点，想办法让元素「分门别类」，建立动态连通关系。
+//让外层的O全和dummy链接, 把内层被X上下左右包围的O全置换成X;
+//二维转1维度数组 -> 二维坐标 (x,y) 可以转换成 x * n + y 这个数（m 是棋盘的行数，n 是棋盘的列数）
 class Solution {
     public void solve(char[][] board) {
         if (board.length == 0) return;
