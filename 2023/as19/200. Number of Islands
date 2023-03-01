@@ -1,0 +1,32 @@
+class Solution {
+    public int numIslands(char[][] grid) {
+        int res = 0;
+        int m = grid.length, n = grid[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == '1') {
+                    res++;
+                    dfs(grid, i, j);
+                }
+            }
+        }
+        return res;
+    }
+
+    void dfs(char[][] grid, int i, int j) {
+        //遇到边界 
+        /* i > grid.length是不对的, 注意这里是小于0和大于等于长度(因为数组从0开始到legth-1)*/ 
+        if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length) {
+            return;
+        } 
+        //已经是0了
+        if (grid[i][j] == '0') return;
+        //将(i, j)变为海水
+        grid[i][j] = '0';
+        //四叉树的遍历框架
+        dfs(grid, i+1, j);
+        dfs(grid, i-1, j);
+        dfs(grid, i, j+1);
+        dfs(grid, i, j-1);
+    }
+}
