@@ -1,0 +1,40 @@
+//本题和岛屿问题的区别是, 要求上下左右都被1包围的0才是岛屿, 所以靠边那些0不是
+//解决方案是, 把靠边的0变成1就可以了(用dfs遍历)
+class Solution {
+    public int closedIsland(int[][] grid) {
+        int res = 0;
+        //把第一列和最后一列变成0
+        /*我错在grid.length -1, 应该是grid[0].length, 举个简单的矩阵例子算下 */ 
+        for (int i = 0; i < grid.length; i++) {
+            traverse(grid, i, 0);
+            traverse(grid, i, grid[0].length - 1);
+        }
+        //把第一行和最后一行变成0
+        /*我错在grid[0].length -1, 应该是 grid.length - 1 */
+        for (int j = 0; j < grid[0].length; j++) {
+            traverse(grid, 0, j);
+            traverse(grid, grid.length - 1, j);
+        }
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 0) {
+                    res++;
+                    traverse(grid, i, j);
+                }
+            }
+        }
+        return res;
+    }
+    void traverse(int[][] grid, int i, int j) {
+        if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length) {
+            return;
+        }
+        if (grid[i][j] == 1) return;
+        grid[i][j] = 1;
+        traverse(grid, i, j - 1);
+        traverse(grid, i, j + 1);
+        traverse(grid, i + 1, j);
+        traverse(grid, i - 1, j);
+    }
+}
