@@ -1,0 +1,35 @@
+//ref https://labuladong.github.io/algo/di-san-zha-24031/bao-li-sou-96f79/yi-wen-mia-4f482/
+//利用StringBuilder记录遍历的顺序, 进入+上下左右四个方向+离开, 放进hashset去重, 返回set的size即可
+class Solution {
+    public int numDistinctIslands(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        //set自动去重, 记录所有岛屿序列化的结果
+        HashSet<String> islands = new HashSet<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    StringBuilder sb = new StringBuilder();
+                    dfs(grid, i, j, sb, 666);
+                    islands.add(sb.toString());
+                }
+            }
+        }
+        return islands.size();
+    }
+        
+    void dfs(int[][] grid, int i, int j, StringBuilder sb, int dir) {
+        int m = grid.length, n = grid[0].length;
+        if (i < 0 || j < 0 || i >= m || j >= n) return;
+        if (grid[i][j] == 0) return;
+
+        grid[i][j] = 0;
+        //前序遍历位置,进入(i,j)
+        sb.append(dir).append(',');
+        dfs(grid, i-1, j, sb, 1); //上
+        dfs(grid, i+1, j, sb, 2); //下
+        dfs(grid, i, j-1, sb, 3); //左
+        dfs(grid, i, j+1, sb, 4); //右
+        //后序遍历位置,离开(i,j)
+        sb.append(-dir).append(',');
+    }
+}
