@@ -1,0 +1,25 @@
+backtrack
+class Solution {
+    List<List<Integer>> res = new LinkedList<>();
+    LinkedList<Integer> track = new LinkedList<>();
+    public List<List<Integer>> combine(int n, int k) {
+        backtrack(n, 1, k);
+        return res;
+    }
+
+    void backtrack(int n, int start, int k) {
+        //条件变了, 记录第k层的数据即可
+        /*我错在start == k, 应该是k = track.size()*/
+        if (k == track.size()) {
+            /*我错在没有new LinkedList(track)*/
+            res.add(new LinkedList(track));
+            return;
+        }
+
+        for (int i = start; i <= n; i++) {
+            track.add(i);
+            backtrack(n, i + 1, k);
+            track.removeLast();
+        }
+    }
+}
