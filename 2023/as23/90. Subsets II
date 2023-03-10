@@ -1,3 +1,5 @@
+//避免nums[i] == nums[i-1]在递归树遍历的情况, 记录每一层的元素即可\
+// ref: https://labuladong.github.io/algo/di-san-zha-24031/bao-li-sou-96f79/hui-su-sua-56e11/
 class Solution {
     List<List<Integer>> res = new LinkedList<>();
     LinkedList<Integer> track = new LinkedList<>();
