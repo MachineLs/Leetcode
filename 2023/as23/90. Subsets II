@@ -18,6 +18,7 @@ class Solution {
         res.add(new LinkedList<>(track));
         for (int i = start; i < nums.length; i++) {
             /*我错在 i+1 < nums.length*/
+            // 剪枝逻辑，值相同的相邻树枝，只遍历第一条
             if (i > start && nums[i] == nums[i-1]) continue;
             track.add(nums[i]);
             backtrack(nums, i+1);
