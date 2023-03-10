@@ -1,0 +1,32 @@
+//其实就是subset问题, basecase改一下就可解决
+//插件
+class Solution {
+    List<List<Integer>> res = new LinkedList<>();
+    LinkedList<Integer> track = new LinkedList<>();
+    int targetSum;
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        backtrack(candidates, 0, target);
+        return res;
+    }
+    void backtrack(int[] nums, int start, int target) {
+        //base改一下条件就可解决
+        if (targetSum == target) {
+            res.add(new LinkedList<>(track));
+            return;
+        }
+        //剪枝
+        if (targetSum > target) return;
+        //模板
+        for (int i = start; i < nums.length; i++) {
+            //剪枝,去除相邻相等的
+            if (i > start && nums[i] == nums[i-1]) continue;
+            track.add(nums[i]);
+            /*我这里忘记更新targetSum的值*/ 
+            targetSum += nums[i];
+            backtrack(nums, i+1, target);
+            targetSum -= nums[i];
+            track.removeLast();
+        }
+    }
+}
