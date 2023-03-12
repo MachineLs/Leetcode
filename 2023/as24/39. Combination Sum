@@ -1,0 +1,27 @@
+//这题和subset很像, 但是subset其实是不重复元素, 但是这题可以使用重复元素, 所以i不需要+1, 模板不一样了
+//ref 插件
+class Solution {
+    List<List<Integer>> res = new LinkedList<>();
+    LinkedList<Integer> track = new LinkedList<>();
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        backtrack(candidates, target, 0, 0);
+        return res;
+    }
+    void backtrack(int[] nums, int target, int start, int targetSum) {
+        if (targetSum == target) {
+            res.add(new LinkedList(track));
+            return;
+        }
+        /*我错在没剪枝, 会爆栈*/
+        if (targetSum > target) return;
+        
+        for (int i = start; i < nums.length; i++) {
+            targetSum += nums[i];
+            track.add(nums[i]);
+            /*我错在模板用错了, 对于可以使用重复元素的题目i不需要加1, 只有不准用重复元素的题目才需要i+1, 进入下一层*/
+            backtrack(nums, target, i, targetSum);
+            track.removeLast();
+            targetSum -= nums[i];
+        }
+    }
+}
