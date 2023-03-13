@@ -1,0 +1,28 @@
+//此题是不给用重复元素,所以必须得是i+1进入下一层, 然后允许的元素是1-9
+//模板按照插件来, k是track的size大小, n就是相当于target值
+class Solution {
+    List<List<Integer>> res = new LinkedList<>();
+    LinkedList<Integer> track = new LinkedList<>();
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        /*我错在传参传的是0, 此题是1-9, 所以从1开始*/ 
+        backtrack(k, n, 1, 0);
+        return res;
+    }
+    void backtrack(int k, int n, int start, int targetSum) {
+        if (track.size() == k && targetSum == n) {
+            res.add(new LinkedList(track));
+            return;
+        }
+
+        if (targetSum > n) return;
+        
+        for (int i = start; i < 10; i++) {
+            targetSum += i;
+            track.add(i);
+            //对于可以使用重复元素的题目i不需要加1, 只有不准用重复元素的题目才需要i+1, 进入下一层
+            backtrack(k, n, i + 1, targetSum);
+            track.removeLast();
+            targetSum -= i;
+        }
+    }
+}
