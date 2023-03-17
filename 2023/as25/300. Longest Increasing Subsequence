@@ -1,5 +1,6 @@
 //subarray 和 subsequence不一样, subarray是连续的, subsequence不需要连续
 //耐心排序 O(nlogn) and O(n)
+//ref https://labuladong.github.io/algo/di-er-zhan-a01c6/zi-xu-lie--6bc09/dong-tai-g-6ea57/ + chat gpt解释算法
 class Solution {
     public int lengthOfLIS(int[] nums) {
         int[] top = new int[nums.length];
@@ -24,8 +25,17 @@ class Solution {
             if (left == piles) piles++;
             //吧这张牌放到堆顶
             top[left] = poker;
+            // System.out.println(Arrays.toString(top) + "num[i] " + nums[i] + "piles " + piles);
         }
         //牌堆数就是LIS长度
         return piles;
     }
 }
+
+在这个算法中，我们使用了一种贪心策略：尽可能让牌堆顶上的牌尽可能小。当新来一张牌时，我们需要找到一个合适的牌堆来放置这张牌。我们使用二分查找来寻找左侧边界，使得该牌堆中的牌尽可能小，以便在未来的牌堆中有更大的空间来放置更多的牌。
+
+假设我们已经找到了n张牌的最长递增子序列，这意味着我们可以在n堆中放置这些牌，并且对于任何牌堆i，堆顶上的牌都小于堆顶上的牌i+1。假设现在我们有第n+1张牌，我们需要找到一个合适的牌堆来放置它。当我们找到左侧边界时，如果left == piles，说明我们需要新建一个牌堆。这是因为我们没有找到一个合适的牌堆来放置这张牌，所以我们需要在新的一堆中放置这张牌。如果left < piles，说明我们找到了一个合适的牌堆来放置这张牌，因此我们将这张牌放在堆顶上。
+
+当我们找到所有的牌时，我们可以将所有的牌分配到n个牌堆中。这是因为我们只有n张牌，而我们有n个牌堆。因此，这n个牌堆中的每个堆都至少有一张牌。如果我们有任何一个牌堆j上有两张牌，则牌堆j上的两张牌都是递增的，因此我们可以将这两张牌合并成一张牌。这样我们就可以得到更短的递增子序列，这与我们的假设相矛盾。
+
+因此，我们得到了一个结论：我们将所有的牌分配到n个牌堆中，每个牌堆都只有一张牌，因此n就是最长递增子序列的长度。
