@@ -1,0 +1,44 @@
+//ref插件 俄罗斯套娃
+//先对首个数排序, 然后对第二个数字降序排序, 套用LIS算法(需要用扑克牌算法要不然时间不够)
+
+class Solution {
+    public int maxEnvelopes(int[][] envelopes) {
+        int n = envelopes.length;
+        /*需要注意的是sort写法第一次没写对*/
+        Arrays.sort(envelopes, (a, b) -> a[0] == b[0] ? b[1] - a[1] : a[0] - b[0]);
+        int[] height = new int[n];
+        for (int i = 0; i < n; i++) {
+            height[i] = envelopes[i][1];
+        }
+        return LIS(height);
+    }
+
+    int LIS(int[] nums) {
+        int[] top = new int[nums.length];
+        //牌堆数初始化为0
+        int piles = 0;
+        for (int i = 0; i < nums.length; i++) {
+            //要处理的扑克牌
+            int poker = nums[i];
+            //左侧边界二分查找
+            int left = 0, right = piles;
+            while (left < right) {
+                int mid = (left + right) / 2;
+                if (top[mid] > poker) {
+                    right = mid;
+                } else if (top[mid] < poker) {
+                    left = mid + 1;
+                } else {
+                    right = mid;
+                }
+            }
+            //没找到合适的牌堆,新建一个堆
+            if (left == piles) piles++;
+            //吧这张牌放到堆顶
+            top[left] = poker;
+            // System.out.println(Arrays.toString(top) + "num[i] " + nums[i] + "piles " + piles);
+        }
+        //牌堆数就是LIS长度
+        return piles;
+    }
+}
