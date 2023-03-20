@@ -1,0 +1,32 @@
+//此题题意就是遇到负数减血,遇到正数加血, 只能向右向下走, 走到最后一个格子, 血至少为1
+//dp方程的定义是 找到损血最小的路径
+class Solution {
+    int[][] memo;
+    public int calculateMinimumHP(int[][] dungeon) {
+        int m = dungeon.length, n = dungeon[0].length;
+        memo = new int[m][n];
+        for (int[] row : memo) {
+            Arrays.fill(row, -1);
+        }
+        return dp(dungeon, 0, 0);
+    }
+
+    int dp(int[][] grid, int i, int j) {
+        int m = grid.length, n = grid[0].length;
+        //base case 
+        /* 如果当前格子的血量是非负数，那么骑士只需要一点血量就可以通过这个格子，所以返回1。
+        如果当前格子的血量是负数，那么骑士需要的血量是-grid[i][j]+1，因为骑士在通过这个格子之前至少要保证有1点血量，否则就无法通过这个格子。*/
+        if (i==m-1 && j==n-1) {
+            return grid[i][j] >= 0 ? 1 : -grid[i][j] + 1;
+        }
+        //越界检测, 如果无解返回最大值
+        if(i == m || j == n) {
+            return Integer.MAX_VALUE;
+        }
+        if (memo[i][j] != -1) return memo[i][j];
+        int res = Math.min(dp(grid, i+1, j), dp(grid, i,j+1)) - grid[i][j];
+        //如果res<=0代表怎么都不伤血, 所以保持为1即可, 否则为res
+        memo[i][j] = res <= 0 ? 1 : res;
+        return memo[i][j];
+    }
+}
