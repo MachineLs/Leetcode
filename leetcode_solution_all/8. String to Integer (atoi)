@@ -1,3 +1,4 @@
+3/24/2023
 //把String变成数字 如果数字前面有空格就去掉,前面后面有字母就去掉, 越界了根据符号返回最大或小值
 //先识别出空格,识别出加减号,识别字母, 计算每个数,在之前的基础上加上10, 然后处理max, min越界问题
 //ref https://www.jiakaobo.com/leetcode/8.%20String%20to%20Integer%20(atoi).html
