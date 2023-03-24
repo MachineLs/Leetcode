@@ -1,0 +1,15 @@
+//这题跟第七题类似只要把x反转后和之前一样即可 Rabin Karp
+class Solution {
+    public boolean isPalindrome(int x) {
+        if (x == 0) return true;
+        if (x < 0) return false;
+        int num = x;
+        int res = 0;
+        while (x != 0) {
+            int tail = x % 10;
+            res = res * 10 + tail;
+            x = x / 10;
+        }
+        return res == num;
+    }
+}
