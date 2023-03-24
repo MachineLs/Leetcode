@@ -15,7 +15,7 @@ class Solution {
             sign = s.charAt(idx) == '+' ? 1 : -1;
             idx++;
         }
-        //using res to record the integer we want
+        //和第七题一样,记录单个数字组成整个数字,并且利用巧妙方法判断越界问题
         int res = 0;
         while (idx < s.length()) {
             int digit = s.charAt(idx) - '0';
