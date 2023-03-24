@@ -1,4 +1,9 @@
 // ref https://www.jiakaobo.com/leetcode/7.%20Reverse%20Integer.html
+// O(logn) and O(1)
+//此题思路就是每次根据x%10 求得tail值, 然后用res记录之前的最后一位然后*10+tail值计算当前的值, 重复循环最后直到x为0进行翻转 
+// tail = 123 % 10 -> tail = 3 -> tmp = 3 and res = 3 and x = 12 -> tail = 2 and tmp = 3*10 + 2 = 32 and x
+// 最后得到321
+//if (tmp / 10 != res) return 0 是一个简化判断是否越界的条件, 如果越界那么归为0
 class Solution {
     public int reverse(int x) {
         int res = 0;
