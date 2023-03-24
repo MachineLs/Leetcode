@@ -1,27 +1,27 @@
-class Solution {       
-    //扫描string,把多的特殊情况都提前减掉,;
-    //然后再按正常情况遍历并且加上对应的数字即可
+class Solution {
+    //把六种特殊情况多算的数提前减去, 然后在扫描s,求和即可
+    //IV 扫出来是 6 但是实际是 4 ->多算2, 所以-2, IX 扫出来是 10, 但是实际9
+    /*注意每次尾差是-2, -20, -200...*/
+    //注意六种特殊情况并不会重复出现, 因为重复出现了就肯定进位了
     public int romanToInt(String s) {
         int sum = 0;
-        if (s.indexOf("IV") != -1) sum -= 2; //indexOf 返回-1代表不存在, 此api, O(n)
+        if (s.indexOf("IV") != -1) sum -= 2;
         if (s.indexOf("IX") != -1) sum -= 2;
         if (s.indexOf("XL") != -1) sum -= 20;
         if (s.indexOf("XC") != -1) sum -= 20;
         if (s.indexOf("CD") != -1) sum -= 200;
         if (s.indexOf("CM") != -1) sum -= 200;
-        
+
         for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (c == 'I') sum += 1;
-            if (c == 'V') sum += 5;
-            if (c == 'X') sum += 10;
-            if (c == 'L') sum += 50;
-            if (c == 'C') sum += 100;
-            if (c == 'D') sum += 500;
-            if (c == 'M') sum += 1000;
+            if (s.charAt(i) == 'I') sum += 1;
+            if (s.charAt(i) == 'V') sum += 5;
+            if (s.charAt(i) == 'X') sum += 10;
+            if (s.charAt(i) == 'L') sum += 50;
+            if (s.charAt(i) == 'C') sum += 100;
+            if (s.charAt(i) == 'D') sum += 500;
+            if (s.charAt(i) == 'M') sum += 1000;
         }
-        
         return sum;
     }
-    //O(n) and O(1)
 }
+// 1000 -100 + 100 + 
