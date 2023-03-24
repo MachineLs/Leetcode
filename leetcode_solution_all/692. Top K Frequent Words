@@ -1,0 +1,19 @@
+Solution1: 先把所有单词放到map里,然后根据map里的value比较,如果数量相同,则根据字典顺序比较
+class Solution {
+    public List<String> topKFrequent(String[] words, int k) {
+        
+        HashMap<String, Integer> map = new HashMap<>();
+        for (String word : words) {
+            map.put(word, map.getOrDefault(word, 0) + 1);
+        }
+        //HashMap<cnt, List<String>>
+        List<String> list = map.keySet().stream().collect(Collectors.toList());
+        //三元表达式, 如果在map里的顺序相等, 根据字典顺序排列
+        list.sort((a, b) -> map.get(b) == map.get(a) ?  a.compareTo(b) : map.get(b) - map.get(a));
+        List<String> res = new ArrayList<>();
+        for (int i = 0; i < k; i++) {
+            res.add(list.get(i));
+        }
+        return res;
+    }
+}

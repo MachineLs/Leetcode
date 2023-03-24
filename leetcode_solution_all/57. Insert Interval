@@ -1,0 +1,49 @@
+三种情况用三个while判断, step1:找到非重叠部分,加入res, setp2:处理重叠部分更新LR后加入res, step3:找到后面的非重叠部分加入res 
+Step1: 遍历整个interval, L和R初始化成newInterval的左右区间, 把interval里右边的值小于L的直接加入res,非重叠部分不需要处理
+Step2:当interval里的左边的值小于R时候, 把L值更新为interval里的最小值, 把R值更新为interval里的最大值, 
+Step3: 把[L,R]加入结果,并且把后面不需要遍历的interval加入到结果里
+class Solution {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        if(newInterval.length == 0) return intervals;
+        if(intervals.length == 0) return new int[][]{newInterval};
+        List<int[]> res = new ArrayList<>();
+
+        //重叠前直接加入List
+        while(j < len && intervals[j][1] < L) res.add(intervals[j++]);      //重叠前直接加入List
+        
+        //重叠的部分, 更新L为interval[i]的最小值, R为interval[i]的最大值
+        while(j < len && intervals[j][0] <= R){     //我错在intervals[i][0] >= L
+            L = Math.min(L, intervals[j][0]);
+            R = Math.max(R, intervals[j][1]);
+            j++;
+        }
+        res.add(new int[]{L,R});
+        
+        //不会再出现重叠区域，直接加入List
+        while(j < len) res.add(intervals[j++]);     
+        // return res.toArray(new int[res.size()][]);
+        return res.toArray(new int[res.size()][]);
+    }
+}
+
+自己实现,很多小错误
+class Solution {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        if (newInterval.length == 0) return intervals;
+        if (intervals.length == 0) return new int[][]{newInterval}; //我错在直接return newInterval 是 int[],要求返回int[][]
+        int L = newInterval[0], R = newInterval[1], len = intervals.length, j = 0;
+        List<int[]> res = new ArrayList<>();
+        while (j < len && intervals[j][1] < L) {
+            res.add(intervals[j]);// res.add(intervals[j][])我错在不会取
+            j++;//我错在j忘记++
+        }
+        while (j < len && intervals[j][0] <= R) {
+            L = Math.min(L, intervals[j][0]);
+            R = Math.max(R, intervals[j][1]);
+            j++;//我错在j忘记++
+        }
+        res.add(new int[]{L, R});
+        while (j < len) res.add(intervals[j++]); //我错在j忘记++
+        return res.toArray(new int[res.size()][]);//我错在toArrays
+    }
+}

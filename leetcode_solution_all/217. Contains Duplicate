@@ -1,0 +1,33 @@
+Solution1: sort and compare Two adjacent elements
+class Solution {
+    public boolean containsDuplicate(int[] nums) {
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            if (i-1 >= 0 && nums[i] == nums[i-1]) {
+                return true;
+            }
+        }
+        return false;
+    }
+    //O(nlogn) and O(1);
+    //Sort time and space complexity https://blog.csdn.net/u010983881/article/details/49511647
+}
+
+Solution2: HashSet
+class Solution {
+    public boolean containsDuplicate(int[] nums) {
+        HashSet<Integer> visited = new HashSet<>();
+        int i = 0;
+        while (i < nums.length) {
+            if (visited.contains(nums[i])) {
+                return true;
+            }
+            if (!visited.contains(nums[i])) {
+                visited.add(nums[i]);
+            }
+            i++;
+        }
+        return false;
+    }
+    //O(n) and O(n)
+}

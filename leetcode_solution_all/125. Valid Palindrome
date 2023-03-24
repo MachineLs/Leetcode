@@ -1,0 +1,40 @@
+//solution1: remove and covert it to target letters, reverse StringBuilder and compare if's same;
+//O(n) and O(n) solution
+//step1: removing all non-alphanumeric characters, convert all uppercase letters into lowercase letters using StringBuilder
+//step2: reverse and compare
+class Solution {
+    public boolean isPalindrome(String s) {
+        //Step1:
+        StringBuilder sb = new StringBuilder();
+        for (char ch: s.toCharArray()) {
+            if (Character.isLetterOrDigit(ch)) {
+                sb.append(Character.toLowerCase(ch));
+            }
+        }
+        String filteredString = sb.toString();
+        String reversedString = sb.reverse().toString();
+        return filteredString.equals(reversedString);
+    }
+}
+
+ //Solution2: use left++ and right-- piont,check if it's equal, until left meet right.(ignore non-alphanumeric characters, convert to lowercase)
+//O(n) becase we just traverse the string only once,  O(1)
+class Solution {
+    public boolean isPalindrome(String s) {
+        int left = 0, right = s.length() - 1;
+        while (left < right) {
+            while (left < right && !Character.isLetterOrDigit(s.charAt(left))) { //我错在String没有isLetterOrDigit(), 错在if循环判断只能过滤一次,需要用while判断多次
+                left++;
+            }
+            while (left < right &&!Character.isLetterOrDigit(s.charAt(right))) {
+                right--;
+            }
+            if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) return false;//我错在String没有toLowerCase()
+            left++;
+            right--;
+        }
+        return true;
+    }
+}
+
+

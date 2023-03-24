@@ -1,0 +1,36 @@
+class Solution {
+    public int findMin(int[] nums) {
+        //high level idea: 此题就是使用binary search, 查找inflection point 也就是转折点 O(logn) and O(1)
+        
+        
+        //移动logn次,并且维护nums两端的最小值
+        int left = 0, right = nums.length - 1;
+        //特例 nums只有一个
+        if (nums.length == 1) return nums[0];
+        //特例,正好是升序排列,返回第一个
+        if (nums[0] < nums[nums.length - 1]) return nums[0];
+        //binary search
+        while (right >= left) {
+            int mid = left + (right - left) / 2;
+            //找到转折点inflection point, 例如[3,4,5,1,2] 5和1都是转折点 所以有两种情况
+            //如果mid在5上, 5是大于后面的点1
+            //注意nums[mid] > nums[mid + 1] 必须放在nums[mid - 1] > nums[mid]前面,要不然 [3,1] mid-1会变成-1
+            if (nums[mid] > nums[mid + 1]) {
+                return nums[mid + 1];
+            }
+            //如果mid在1上, mid-1为5, 大于mid, mid是最小点
+            if (nums[mid - 1] > nums[mid]) {
+                return nums[mid];
+            }
+            //如果mid值大于left值,说明转折点在mid右边
+            if (nums[mid] > nums[left]) {
+                left = mid + 1;
+            }
+            //反之在左边
+            if (nums[mid] < nums[right]) {
+                right = mid - 1;
+            }
+        }
+        return 0;
+    }
+}

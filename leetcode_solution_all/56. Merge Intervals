@@ -1,0 +1,22 @@
+solution1 : O(nlogn) and O(n)
+先sort,判断是否重叠 对于非重叠部分直接加, 对于重叠部分,更新每一个interval的右区间的值为当前interval的右区间的值
+
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        LinkedList<int[]> res = new LinkedList<>(); //我错在List没有getLast()
+        for (int i = 0; i < intervals.length; i++) {
+            //不重叠直接加
+            if (res.isEmpty() || res.getLast()[1] < intervals[i][0]) {
+                res.add(intervals[i]);
+            }
+            //重叠的话,getlast右边直接更新为intervals的右边
+            if (res.getLast()[1] >= intervals[i][0]) { //我错在intervals[i][1], 注意这里是判断重叠,所以需要用0来判断,否则会忽略一些情况
+                res.getLast()[1] = Math.max(res.getLast()[1], intervals[i][1]);
+            }
+            //更新完重叠的部分, 剩下的部分由上面不重叠继续添加,无需在下面添加了
+        }
+        return res.toArray(new int[res.size()][]);
+        // return res; 我错在没有直接return res.toArray(new int[res.size()][]);, 而是转换后,return res,不行的
+    }
+}

@@ -1,0 +1,42 @@
+Solution1: sort and add to the map
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        //Step1: 对每个String排序,放到map里,
+        //step2: 如果没有就存一个空的list,如果有就当前String加到list里
+        if (strs.length == 0) return new ArrayList<>();
+        HashMap<String, List> map = new HashMap<>();
+        for (String word : strs) {
+            // Arrays.sort(word);//我错在String不能sort
+            char[] tmp = word.toCharArray();
+            Arrays.sort(tmp);
+            String key = String.valueOf(tmp);
+            if (!map.containsKey(key)) map.put(key, new ArrayList<>());
+            map.get(key).add(word);
+        }
+        return new ArrayList(map.values());//我错在直接返回map.values()
+    }
+}
+//O(nklogk) and O(nk) n is word and k is the key length
+
+Solution2: use int[]count, the key is the count[i] add"#" for special case;
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        if (strs.length == 0) return new ArrayList();
+        Map<String, List> res = new HashMap<>();
+        int[] count = new int[26];
+        for (String s : strs) {
+            Arrays.fill(count, 0);//相当于每次把count重置为0;
+            for (char c : s.toCharArray()) count[c - 'a']++;
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 26; i++) {
+                sb.append('#');
+                sb.append(count[i]);
+            }
+            String key = sb.toString();
+            if (!res.containsKey(key)) res.put(key, new ArrayList<>());
+            res.get(key).add(s);
+        }
+        return new ArrayList(res.values()); //不可以有<> cannot infer type arguments for ArrayList<>
+    }
+    //O(nk) and O(nk)
+}
