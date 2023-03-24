@@ -1,4 +1,6 @@
+//把String变成数字 如果数字前面有空格就去掉,前面后面有字母就去掉, 越界了根据符号返回最大或小值
 //先识别出空格,识别出加减号,识别字母, 计算每个数,在之前的基础上加上10, 然后处理max, min越界问题
+//ref https://www.jiakaobo.com/leetcode/8.%20String%20to%20Integer%20(atoi).html
 class Solution {
     public int myAtoi(String s) {
         //conner case
@@ -19,11 +21,9 @@ class Solution {
             int digit = s.charAt(idx) - '0';
             if (digit < 0 || digit > 9) break;
             int newRes = res * 10 + digit;
-            //judge if the res is out of range, we will set the digit to max or min
-            //res > max_value / 10 or
-            //res == max_val / 10 and max_value % 10 < digit
-            if (res > Integer.MAX_VALUE / 10 || (res == Integer.MAX_VALUE / 10 && Integer.MAX_VALUE % 10 < digit)) {
-                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE; //越界了,直接return,不需要在判断后面的了, 我错在还在更新值
+            /*越界了,直接return,不需要在判断后面的了, 我错在还在更新值*/
+            if (newRes/10 != res) {
+                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
             }
             res = newRes;
             idx++;
