@@ -1,0 +1,35 @@
+Solution1: property 1 ^ 1 = 0, 2 ^ 2 = 0  3 ^ 4 != 0, so we just need to find which doesn't equal to 0;
+class Solution {
+    public int missingNumber(int[] nums) {
+        Arrays.sort(nums);
+        int res = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if ((i ^ nums[i]) != 0) return i;
+        }
+        return nums.length;
+    }
+}
+//O(nlogn) and O(1)
+
+solution2: 
+
+class Solution {
+    public int missingNumber(int[] nums) {
+        int res = nums.length;
+        for (int i = 0; i < nums.length; i++) {
+            res += i - nums[i];
+        }
+        return res;
+    }
+}
+
+Solution3: ^有交换律
+class Solution {
+    public int missingNumber(int[] nums) {
+        int xor = 0, i = 0;
+        for (i = 0; i < nums.length; i++) {
+            xor = xor ^ i ^ nums[i];
+        }
+        return xor ^ i;
+    }
+}

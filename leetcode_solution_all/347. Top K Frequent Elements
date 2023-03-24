@@ -1,0 +1,33 @@
+//int[] A = {1,2,3,4,5,6,7,8,9};
+//minHeap是按照1-9顺序出1,2,3..9
+//所以如果让minHeap输出TopK, 最后的for循环就得倒着输出从k-1 到0
+
+//maxHeap是按照9-1顺序出9,8,7..1
+//所以让maxHeap输出TopK, i从0到k正序即可
+
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        if (k == nums.length) {
+            return nums;
+        }
+        
+        Map<Integer, Integer> count = new HashMap<>();
+        for (int n : nums) {
+            count.put(n, count.getOrDefault(n, 0) + 1); //注意我错在count.getOrDefault(0, n), 应该是n在前面
+        }
+        Queue<Integer> minHeap = new PriorityQueue((a, b) -> count.get(a) - count.get(b));
+        //维护一个数量为k的minHeap
+        for (int n : count.keySet()) {
+            minHeap.add(n);
+            if (minHeap.size() > k) minHeap.poll();
+        }
+        
+        int[] top = new int[k];
+        for (int i = k - 1; i >= 0; i--) {
+            top[i] = minHeap.poll();
+        }
+        return top;
+    }
+    
+    //O(nlogk) and O(n+k)
+}

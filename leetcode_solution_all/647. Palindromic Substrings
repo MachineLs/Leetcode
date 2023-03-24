@@ -1,0 +1,75 @@
+Solution3 最好 O(n^2) and O(1)
+Solution1: 暴力,超时
+class Solution {
+    public int countSubstrings(String s) {
+        int len = s.length();
+        int max = 0;
+        for (int i = 0; i < len; i++) {
+            for (int j = i + 1; j < len + 1; j++) {
+                String tmp = s.substring(i, j);
+                if (helper(tmp)) max++;
+            }
+        }
+        return max;
+    }
+    
+    private boolean helper(String array) {
+        int left = 0, right = array.length() - 1;
+        while (left < right) {
+            if (array.charAt(left) != array.charAt(right)) return false;
+        }
+        return true;
+    }
+}
+Solution2: 暴力不超时,不需要用substring
+class Solution {
+    
+    public int countSubstrings(String s) {
+        int ans = 0;
+        for (int start = 0; start < s.length(); ++start)
+            for (int end = start; end < s.length(); ++end) 
+                ans += isPalindrome(s, start, end) ? 1 : 0;
+
+        return ans;
+    }
+    
+    private boolean isPalindrome(String s, int start, int end) {
+        while (start < end) {
+            if (s.charAt(start) != s.charAt(end)) 
+                return false;
+
+            ++start;
+            --end;
+        }
+
+        return true;
+    }
+}
+
+Solution3: for循环从中间向两边扩展 O(n^2) and O(1)
+class Solution {
+
+//Step1: We choose all possible centers for potential palindromes:
+//Step1.1: Every single character in the string is a center for possible odd-length palindromes
+//Step1.2: Every pair of consecutive characters in the string is a center for possible even-length palindromes.
+
+//Step2: For every center, we can expand around it as long as we get palindromes (i.e. the first and last characters should match).
+
+    public int countSubstrings(String s) {
+        int count=0;
+        for(int i=0;i<s.length();i++){
+            count+=expandPalindrome(s,i,i);//odd length
+            count+=expandPalindrome(s,i,i+1);//even length
+        }
+        return count;
+    }
+    public int expandPalindrome(String s, int left, int right){
+        int count=0;
+        while(left>=0 && right<s.length()&& (s.charAt(left)==s.charAt(right))){
+            left--;
+            right++;
+            count++;
+        }
+        return count;
+    }
+}

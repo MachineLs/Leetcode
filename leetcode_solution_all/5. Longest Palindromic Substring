@@ -1,0 +1,101 @@
+Best Solution: ref https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-48c1d/shuang-zhi-fa4bd/
+class Solution {
+    public String longestPalindrome(String s) {
+        String res = "";
+        for (int i = 0; i < s.length(); i++) {
+            String s1 = Palindrome(s, i, i); //奇数情况: 此时left = right 
+            String s2 = Palindrome(s, i, i+1); // 偶数情况: left 和right是相邻两个数 不会越界
+            res = res.length() > s1.length() ? res : s1;
+            res = res.length() > s2.length() ? res : s2;
+        }
+        return res;
+    }
+
+    public String Palindrome(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        return s.substring(left + 1, right); //此处因为 上面left--;right++; 所以left得加1, right因为是[),所以不用减1
+    }
+}
+
+
+//Solution1: brute force, 对每一个字串判断是否是validPalindrome
+class Solution {
+    public String longestPalindrome(String s) {
+        int len = s.length();
+        if (len < 2) {
+            return s;
+        }
+        int maxLen = 1;
+        int begin = 0;
+        //s.charAt(i)会检查下标越界
+        char[] charArray = s.toCharArray();
+        //枚举所有长度严格大于1的substring
+        for (int i = 0; i < len - 1; i++) {
+            for (int j = i + 1; j < len; j++) {
+                if (j - i + 1 > maxLen && helper(charArray, i, j)) {
+                    maxLen = j - i + 1;
+                    begin = i;
+                }
+            }
+        }
+        return s.substring(begin, begin + maxLen);
+    }   
+    
+    private boolean helper(char[] charArray, int i, int j) {
+        while (i < j) {
+            if (charArray[i] != charArray[j]) {
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
+}
+
+视频解释 https://leetcode.cn/problems/longest-palindromic-substring/solution/zui-chang-hui-wen-zi-chuan-by-leetcode-solution/
+Solution2: dp中心扩散 O(n^2) and O(n^2)...         运行速度比上面方法都慢
+class Solution {
+    public String longestPalindrome(String s) {
+        int len = s.length();
+        if (len < 2) {
+            return s;
+        }
+        int maxLen = 1;
+        int begin = 0;
+        
+        //dp[i][j] 表示S[i,...,j]是否是palindrome
+        boolean[][] dp = new boolean[len][len];
+        for (int i = 0; i < len; i++) {
+            dp[i][i] = true;
+        }
+        
+        char[] charA = s.toCharArray();
+        //左下角先填表,所以先j后i
+        for (int j = 1; j < len; j++) {
+            for (int i = 0; i < j; i++) {
+                if (charA[i] != charA[j]) { //最外层i,j 是由里层的[i+1,...,j-1]判断的
+                    dp[i][j] = false;
+                } else {
+                    ////例子 a b a 差为2 和 abba 差为3, aa差为0, 一定是palindrome
+                    if ((j - i) < 3) { 
+                        dp[i][j] = true;
+                    } else {
+                        dp[i][j] = dp[i+1][j-1];
+                    }
+                }
+                
+                //只要dp[i][j]为true -> s[i,...,j]是回文, && update最大回文长度,记录此时i的起始位置
+                if(dp[i][j] && j - i + 1 > maxLen) {
+                    maxLen = j - i + 1;
+                    begin = i;
+                }
+            }
+        }
+        return s.substring(begin, begin + maxLen);
+        
+    }
+}

@@ -1,0 +1,143 @@
+Solution1: 先做成邻接表 然后判断tree 性质1: n个node 必须有n-1个edge 性质2: tree必须是无环的dfs判断 性质3:tree是connected,一个节点可以到达任意节点,不允许孤立的节点存在
+class Solution {
+    private List<List<Integer>> adjacencyList = new ArrayList<>();
+    private Set<Integer> seen = new HashSet<>();
+    public boolean validTree(int n, int[][] edges) {
+        
+        if (edges.length != n - 1) return false; //If tree have “n” vertices then it must have exactly “n-1” edges only.
+        
+        for (int i = 0; i < n; i++) {
+            adjacencyList.add(new ArrayList<>());
+        }
+        //无向图正方向,反方向分别来一遍,计算图的邻接矩阵
+        for (int[] edge : edges) {
+            adjacencyList.get(edge[0]).add(edge[1]);
+            adjacencyList.get(edge[1]).add(edge[0]);
+        }
+        // System.out.println("adjacencyList" + adjacencyList);   adjacencyList[[1, 2, 3], [0, 4], [0], [0], [1]]
+        
+        // We return true iff no cycles were detected, AND the entire graph has been reached.
+
+        //(0,-1) -1是固定写法,固定0的父节点就是-1
+        return dfs(0, -1) && seen.size() == n;   //用一个set,判断是否无环,如果dfs寻找到环了,set里必定存过,所以得是false,如果traverse完了,就是true
+    }
+    
+    public boolean dfs(int node, int parent) {
+        if (seen.contains(node)) return false;
+        seen.add(node);
+        for (int neighbour : adjacencyList.get(node)) {
+            if (parent != neighbour) {
+                boolean result = dfs(neighbour, node);
+                if (!result) return false;
+            }
+        }
+        return true;
+    }
+}
+
+Solution2: 拓扑排序,出度入度算一编,入度为1的进队,性质1:判断是否有环,性质2:n个节点必须n-1个边,性质3:bfs遍历完个数必须相等于n
+
+class Solution {
+    public boolean validTree(int n, int[][] edges) {
+        //step1: check if its union-found 
+        int len = edges.length;
+        if (n == 1 && len == 0) {
+            return true;
+        }
+        if (n - 1 != len) {
+            return false;
+        }
+        
+        //build graph and incomingEdges
+        List<List<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < n; i++) { 
+            graph.add(new ArrayList<>());
+        }
+        //制作邻接表
+        for (int i = 0; i < len; i++) {
+            int[] edge = edges[i];
+            int x = edge[0];
+            int y = edge[1];
+            graph.get(y).add(x);
+            graph.get(x).add(y);
+        }
+        return helper(graph, n);
+    }
+    private boolean helper(List<List<Integer>> graph, int n){
+        int expanded = 0;
+        int[] incomingEdges = new int[n];
+        for (int x = 0; x < n; x++) {
+            for (int y : graph.get(x)) {
+                incomingEdges[y]++;
+            }
+        }
+        Queue<Integer> q = new LinkedList<>(); //这里是queue 我错在List
+        //所以入度为1的节点入队,和bfs不一样
+        for (int x = 0; x < n; x++) {
+            if (incomingEdges[x] == 1) {
+                q.offer(x);
+            }
+        }
+
+        while (!q.isEmpty()) {
+            int cur = q.poll();
+            expanded++;
+            for (int nei : graph.get(cur)) {
+                if (--incomingEdges[nei] == 1) {
+                    q.offer(nei);
+                }
+            }
+        }
+        return expanded == n;
+    }
+}
+
+//用并查集,分别查数组里每两个节点是否联通,如果有一个不联通说明,不是tree
+//在查联通的过程中,分别会查找A,B的父节点,如果A和B的父节点不是一个,说明不连通
+class UnionFind {
+    private int[] parent;
+    public UnionFind(int n) {
+        //初始化,所有node的父节点都是他们自己
+        parent = new int[n];
+        for (int node = 0; node < n; node++) {
+            parent[node] = node;
+        }
+    }
+    //没有路径压缩
+    // public int find(int A) {
+    //     while (parent[A] != A) {
+    //         A = parent[A];
+    //     }
+    //     return A;
+    // }
+    public int find(int A) {
+        if (A == parent[A]) return A;
+        //路径压缩 path compression
+        parent[A] = find(parent[A]);
+        return parent[A];
+    }
+
+    public void union(int A, int B) {
+        int rootA = find(A);
+        int rootB = find(B);
+        parent[A] = B;
+    }
+
+}
+class Solution {
+    public boolean validTree(int n, int[][] edges) {
+        if (edges.length != n - 1) return false;
+        UnionFind unionFind = new UnionFind(n);
+        for (int[] edge : edges) {
+            int A = unionFind.find(edge[0]);
+            int B = unionFind.find(edge[1]);
+            if (A == B) {
+                return false;
+            } else {
+                unionFind.union(A, B);
+                n--;
+            }
+        }
+        return n<=1;
+    }
+}
