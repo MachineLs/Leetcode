@@ -1,0 +1,41 @@
+//字典序, 固定算法 ref https://www.jiakaobo.com/leetcode/31.%20Next%20Permutation.html and chatgpt
+// 从后往前遍历，找到第一个降序 A[x]
+// 从后往前遍历，找到第一个比 A[x]大的数字 A[y]
+// 交换 A[x]和 A[y]
+// 将 x 之后的数字排序
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int n = nums.length;
+        int i = n - 2;
+        //从右往左，找到第一个降序的位置 i，即 nums[i] > nums[i-1]，这个位置就是需要被交换的位置。
+        while (i >= 0 && nums[i] >= nums[i+1]) {
+            i--;
+        }
+        //在 i 右边的数中，找到比 nums[i-1] 大的最小数，记为 nums[j]，并将 nums[j] 和 nums[i-1] 交换位置。
+        if (i >= 0) {
+            int j = n - 1;
+            //找到比nums[i] 大的最小数nums[j]
+            while (j >= 0 && nums[i] >= nums[j]) {
+                j--;
+            }
+            //交换nums[i]和nums[j]
+            swap(nums, i, j);
+        }
+        //将i右边的数按升序排列
+        reverse(nums, i+1);
+    }
+    //将数组从i开始的部分反转
+    void reverse(int[] nums, int i) {
+        int j = nums.length - 1;
+        while (i < j) {
+            swap(nums, i, j);
+            i++;
+            j--;
+        }
+    }
+    void swap(int[] nums, int i, int j) {
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
+    }
+}
