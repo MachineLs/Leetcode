@@ -1,0 +1,30 @@
+//组合问题本质上就是遍历一棵回溯树，套用回溯算法代码框架即可。
+//先生成一个Mapping, 然后使用回溯模板遍历所有可能性
+class Solution {
+    String[] mapping = new String[]{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    List<String> res = new LinkedList<>();
+    public List<String> letterCombinations(String digits) {
+        if (digits.isEmpty()) {
+            return res;
+        }
+        StringBuilder sb = new StringBuilder();
+        backtrack(digits, 0, sb);
+        return res;
+    }
+    void backtrack(String digits, int start, StringBuilder sb) {
+        if (sb.length() == digits.length()) {
+            res.add(sb.toString());
+            return;
+        }
+        
+        for (int i = start; i < digits.length(); i++) {
+            int digit = digits.charAt(i) - '0';
+            /*注意此处需要.toCharArray() 转换成char[], mapping取出的单个元素是String*/ 
+            for (char c : mapping[digit].toCharArray()) {
+                sb.append(c);
+                backtrack(digits, i+1, sb);
+                sb.deleteCharAt(sb.length() - 1);
+            }
+        }
+    }
+}
