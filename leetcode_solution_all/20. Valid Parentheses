@@ -1,3 +1,31 @@
+3/27 solution
+class Solution {
+    // char[] b = {'(', ')', '[', ']', '{', '}'};
+    public boolean isValid(String s) {
+        ArrayDeque<Character> stack = new ArrayDeque<>();
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push(c);
+            } else {
+                if (!stack.isEmpty() && check(c) == stack.peek()) {
+                    stack.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+        /*我错在直接return true, 应该检查stack是否为空*/ 
+        return stack.isEmpty();
+    }
+
+    char check(char c) {
+        if (c == ']') return '[';
+        if (c == ')') return '(';
+        return '{';
+    }
+}
+
+
 class Solution {
     //O(n) and O(n)
     //Step1: 把open parentheses and close parentheses作为key,value放到map里
