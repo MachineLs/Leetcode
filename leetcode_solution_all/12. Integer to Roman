@@ -1,3 +1,7 @@
+// ref https://leetcode.com/problems/integer-to-roman/solutions/3216797/easiest-beginner-friendly-sol-c-java-python/
+// For each pair, check if the input integer is greater than or equal to the Roman numeral value.
+// If it is, add the corresponding symbol to the Roman string and subtract the corresponding value from the input integer.
+// Repeat steps 4-5 until the input integer becomes zero.
 class Solution {
     public String intToRoman(int num) {
         String roman = "";
