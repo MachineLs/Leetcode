@@ -1,0 +1,15 @@
+v2023.4.1
+//https://www.jiakaobo.com/leetcode/14.%20Longest%20Common%20Prefix.html
+//取第一个作为prefix, flower, 每次和后一个单词比较, 并把它减少, flower -> flow, flow -> fl, 通过strs[i].startWith(pre) 比较 flight 前缀是否是fl
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        String pre = strs[0];
+        for (int i = 1; i < strs.length; i++) {
+            while (!strs[i].startsWith(pre)) {
+                pre = pre.substring(0, pre.length() - 1);
+                System.out.println(pre + " " + strs[i]);
+            }
+        }
+        return pre;
+    }
+}
