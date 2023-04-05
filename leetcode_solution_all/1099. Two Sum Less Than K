@@ -1,0 +1,27 @@
+//ref插件
+//排序后, 如果比较左右指针对应数之和  和 k的大小, 小则左指针++, 大则右指针--, 注意sum的位置不可以放在下面, 预防ij相等导致重复nums[i] = nums[j] 产出错误解
+//[21, 115, 127, 135, 140, 143, 146, 185, 229, 254, 256, 280, 314, 320, 353, 358, 399, 411, 423, 450, 486, 495, 533, 536, 537, 542, 543, 549, 573, 591, 599, 635, 670, 671, 672, 672, 716, 722, 732, 733, 758, 777, 815, 896, 898, 918, 920, 923, 952, 974]
+//898和898
+class Solution {
+    public int twoSumLessThanK(int[] nums, int k) {
+        Arrays.sort(nums);
+        System.out.println(Arrays.toString(nums));
+        int i = 0, j = nums.length - 1, sum = -1;
+        while (i < j) {
+            if (nums[i] + nums[j] < k) {
+                /*判断条件应该放在这里防止i, j相等*/ 
+                sum = Math.max(sum, nums[i] + nums[j]);
+                i++;
+            } else {
+                j--;
+            }
+            /*我错在j--后会导致i,j相等*/
+            // if (nums[i] + nums[j] < k) {
+            //     sum = Math.max(sum, nums[i] + nums[j]);
+            //     System.out.println(nums[i] + " " + nums[j]);
+            // }
+        
+        }
+        return sum;
+    }
+}
