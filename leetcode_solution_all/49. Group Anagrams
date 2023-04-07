@@ -9,7 +9,9 @@ class Solution {
             // Arrays.sort(word);//我错在String不能sort
             char[] tmp = word.toCharArray();
             Arrays.sort(tmp);
-            String key = String.valueOf(tmp);
+            //强制类型转换,两种方法都可以 但是(String) tmp不可以
+            // String cur = String.valueOf(tmp);
+            String cur = new String(tmp);
             //如果不存在,新建一个空的List
             if (!map.containsKey(key)) map.put(key, new ArrayList<>());
             //然后把当前的word加到list里;
