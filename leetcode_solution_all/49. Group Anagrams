@@ -15,7 +15,9 @@ class Solution {
             //然后把当前的word加到list里;
             map.get(key).add(word);
         }
-        return new ArrayList(map.values());//我错在直接返回map.values()
+        //我错在直接返回map.values()
+        //Collection<List> cannot be converted to List<List<String>>
+        return new ArrayList(map.values());//这里需要类型转换
     }
 }
 //O(nklogk) and O(nk) n is word and k is the key length
