@@ -10,7 +10,9 @@ class Solution {
             char[] tmp = word.toCharArray();
             Arrays.sort(tmp);
             String key = String.valueOf(tmp);
+            //如果不存在,新建一个空的List
             if (!map.containsKey(key)) map.put(key, new ArrayList<>());
+            //然后把当前的word加到list里;
             map.get(key).add(word);
         }
         return new ArrayList(map.values());//我错在直接返回map.values()
