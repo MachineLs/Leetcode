@@ -1,3 +1,33 @@
+V2023.4.7
+// Solution: 解法sliding window, 搞清楚什么时候扩大窗口, 什么时候缩小窗口, 什么时候更新结果. 本题缩小窗口就是当windowSum<0的时候
+//ref 插件
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int left = 0, right = 0;
+        int windowSum = 0, maxSum = Integer.MIN_VALUE;
+        while (right < nums.length) {
+            //扩大窗口并更新窗口内的元素和
+            windowSum += nums[right];
+            right++;
+            
+            //更新答案
+            // maxSum = windowSum > maxSum ? windowSum : maxSum;
+            maxSum = Math.max(windowSum, maxSum);
+
+            //判断窗口是否要收缩
+            //在该代码中，while 循环的目的是缩小窗口并更新窗口内的元素和。
+            //如果窗口内的元素和小于0，说明当前窗口已经不再有潜力继续增大子数组的和，因此需要缩小窗口，直到窗口内的元素和变得非负为止。
+            while (windowSum < 0) {
+                //缩小窗口并更新窗口内的元素和
+                windowSum -= nums[left];
+                left++;
+            }
+        }
+        return maxSum;
+    }
+}
+
+历史解法
 53. Maximum Subarray
 https://leetcode.cn/problems/maximum-subarray/
 Solution 1: DP
