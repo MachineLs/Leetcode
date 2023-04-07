@@ -1,0 +1,31 @@
+//ref插件 O(mn) and O(mn)
+//最后一个1 是由上面1和左边2的去最小路径值决定的, 所以典型的递归问题, 并且可以memo dp优化
+class Solution {
+    public int minPathSum(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        memo = new int[m][n];
+        for (int[] row : memo) {
+            Arrays.fill(row, -1);
+        }
+        return dp(grid, m-1, n-1);
+    }
+    int[][] memo;
+    int dp(int[][] grid, int i, int j) {
+        //base case
+        //因为后面的值是通过前面的值推断出来的, 所以当为0,0时候, 是base case
+        if (i == 0 && j == 0) {
+            return grid[0][0];
+        }
+        //索引出界
+        if (i < 0 || j < 0) {
+            return Integer.MAX_VALUE;
+        }
+        if (memo[i][j] != -1) return memo[i][j]; 
+
+        memo[i][j] = Math.min(
+            dp(grid, i-1, j),
+            dp(grid, i, j-1)) + grid[i][j];
+        
+        return memo[i][j];
+    }
+}
