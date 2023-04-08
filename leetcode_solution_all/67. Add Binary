@@ -1,0 +1,33 @@
+// 从最低位开始，依次将两个二进制数的对应位相加，如果结果为 0 或 1，直接将其存储到结果中，进入下一位。
+
+// 如果结果为 2，则将结果存储为 0，并将进位标志设为 1，(2/2=1) 然后进入下一位。
+
+// 如果结果为 3，则将结果存储为 1，并将进位标志设为 1, (3/2=1) 然后进入下一位。
+
+// 如果两个二进制数的位数不同，则在较短的数的高位补 0，直到两个二进制数的位数相同为止。
+
+// 如果最高位相加后产生了进位，则将进位加到结果的最高位上。
+
+// 最后将结果反转即可得到正确的二进制和。
+class Solution {
+    public String addBinary(String a, String b) {
+        int i = a.length() - 1;
+        int j = b.length() - 1;
+        //进位符
+        int carry = 0;
+        StringBuilder sb = new StringBuilder();
+        /*carry > 0 而不是 >= 0 */
+        while (i >= 0 || j >= 0 || carry > 0) {
+            int sum = carry;
+            if (i >= 0) {
+                sum += a.charAt(i--) - '0';
+            }
+            if (j >= 0) {
+                sum += b.charAt(j--) - '0';
+            }
+            sb.append(sum % 2);
+            carry = sum / 2;
+        }
+        return sb.reverse().toString();
+    }
+}
