@@ -189,3 +189,12 @@ as31:
 67	Add Binary
 70	Climbing Stairs
 74	Search a 2D Matrix
+
+as32:
+79	Word Search
+88	Merge Sorted Array
+91	Decode Ways
+98	Validate Binary Search Tree
+100	Same Tree
+101	Symmetric Tree
+102	Binary Tree Level Order Traversal
