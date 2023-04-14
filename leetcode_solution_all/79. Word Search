@@ -1,0 +1,48 @@
+//在字符矩阵中进行匹配。由于dfs的特点，每次搜索只会在一个方向上进行，因此需要搜索四个方向才能覆盖整个字符矩阵。
+//如果找到了一个匹配的单词，那么就可以直接返回，因为我们只需要找到一个答案即可。
+//使用found来标记已经找到了
+class Solution {
+    boolean found = false;
+    public boolean exist(char[][] board, String word) {
+        int m = board.length, n = board[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                dfs(board, i, j, word, 0);
+                if (found) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    //从(i, j)开始向四周搜索, 试图匹配word[p..]
+    void dfs(char[][] board, int i, int j, String word, int p) {
+        if (p == word.length()) {
+            //如果已经匹配到了 word 的最后一个字符，即 p == word.length()，说明一定找到了一个匹配的单词，这时将 found 标记设置为 true，并返回
+            found = true;
+            return;
+        }
+        if (found) {
+            //已经找到一个答案
+            return;
+        }
+        int m = board.length, n = board[0].length;
+        if (i < 0 || j < 0 || i >= m || j >= n) {
+            return;
+        }
+        //如果搜索中有一个字不匹配直接跳出
+        if (board[i][j] != word.charAt(p)) {
+            return;
+        }
+        //已经匹配的字符, 我们给他添加一个负号作为标记
+        board[i][j] = (char)(-board[i][j]);
+        //注意这里不可以是p++, 因为会导致p一直++影响2-4,p的长度
+        dfs(board, i+1, j, word, p+1);
+        dfs(board, i, j+1, word, p+1);
+        dfs(board, i-1, j, word, p+1);
+        dfs(board, i, j-1, word, p+1);
+        //还原状态
+        board[i][j] = (char)(-board[i][j]);
+    }
+}
